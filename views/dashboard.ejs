@@ -1,0 +1,43 @@
+<% layout('layout/boilerplate') -%>
+
+    <ul>
+        <li>Happy: <%= countHappy %>
+        </li>
+        <li>Neutral: <%= countNeutral %>
+        </li>
+        <li>Sad: <%= countSad %>
+        </li>
+    </ul>
+
+
+
+    <div id="container" style="width: 100%; height: 400px"></div>
+    <script>
+        anychart.onDocumentReady(function () {
+
+            // set the data
+            var data = [
+                { x: "Happy", value: <%= countHappy %> , normal:  {fill: "#00FF00"}},
+                { x: "Neutral", value: <%= countNeutral %> , normal:  {fill: "#ADD8E6"}},
+                { x: "Sad", value: <%= countSad %> , normal:  {fill: "#FF0000"}}
+            ];
+
+        // create the chart
+        var chart = anychart.pie();
+
+        // set the chart title
+        chart.title("Users Feedback");
+
+        // add the data
+        chart.data(data);
+
+        // display the chart in the container
+        chart.container('container');
+        // set legend position
+        chart.legend().position("right");
+        // set items layout
+        chart.legend().itemsLayout("vertical");
+        chart.draw();
+
+        });
+    </script>

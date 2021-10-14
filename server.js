@@ -70,6 +70,21 @@ app.post('/', async (req, res) => {
 });
 
 
+app.get('/dashboard', async (req, res) => {
+    try {
+        const countHappy = await Feedback.countDocuments({"mood":"happy"});
+        const countNeutral = await Feedback.countDocuments({"mood":"neutral"});
+        const countSad = await Feedback.countDocuments({"mood":"sad"});
+
+        res.render('dashboard', {countHappy, countNeutral, countSad});
+    }
+    catch (e) {
+        console.log(e);
+        res.status(500).send("Internal error");
+    }
+});
+
+
 //-----Page not found------
 app.use((req, res) => {
     res.status(404).send('PAGE NOT FOUND!');
