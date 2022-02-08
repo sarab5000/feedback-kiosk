@@ -1,0 +1,29 @@
+anychart.onDocumentReady(function() {
+    // create pie chart
+    var chart = anychart.pie();
+
+    // set chart title
+    chart.title('Top 10 Cosmetic Products by Revenue');
+  
+  var dataSet = anychart.data.set([
+                    { x: "Happy", value: 100 , loc:"here" , normal: { fill: "#00FF00" }},
+                    { x: "Neutral", value: 20 ,loc:"here", normal: { fill: "#ADD8E6" }},
+                    { x: "Sad", value: 30 , loc:"here", normal: { fill: "#FF0000" }}
+                ]);
+
+    var view = dataSet.mapAs();
+
+    // The filter of data.
+    var filteredView = view.filter('loc', function(value) {
+        return value === "here";
+    });
+
+    // set chart data
+    chart.data(filteredView);
+
+    // set container id for the chart
+    chart.container('container');
+
+    // initiate chart drawing
+    chart.draw();
+});

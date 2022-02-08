@@ -50,7 +50,13 @@ mongoose.connect(dbUrl)
 //-----Show the feedback main screen-----
 app.get('/', (req, res) => {
     try {
-        res.render('home');
+        let location = "default";
+        if('location' in req.query)
+        {
+            location = req.query.location;
+        }
+
+        res.render('home', {location});
     }
     catch (e) {
         console.log(e);

@@ -4,6 +4,8 @@ const happyBtn = document.querySelector('#happy');
 const sadBtn = document.querySelector('#sad');
 const neutralBtn = document.querySelector('#neutral');
 
+const locationTxt = document.querySelector('#device_location');
+
 happyBtn.addEventListener('click', async () => {
     await SaveFeedbackAPI("happy");
 });
@@ -20,16 +22,20 @@ neutralBtn.addEventListener('click', async () => {
 
 const SaveFeedbackAPI = async (mood) => {
     console.log(mood);
+    console.log(locationTxt.value);
 
     let utcDate = new Date();
     let niceDate = utcDate.toLocaleString('en-GB');
 
-    // Call data storage API and store happy, UTC timestamp and local timestamp
-    await axios.post('/', {
+    const feedbackObj = {
         timestamp: utcDate,
         timestamp_local: niceDate,
-        mood: mood
-    }).catch(function (error) {
+        mood: mood,
+        location: locationTxt.value
+    };
+
+    // Call data storage API and store happy, UTC timestamp and local timestamp
+    await axios.post('/', feedbackObj).catch(function (error) {
         if (error.response) {
             console.log(error.response.data);
             console.log(error.response.status);

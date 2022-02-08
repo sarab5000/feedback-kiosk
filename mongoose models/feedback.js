@@ -12,6 +12,10 @@ const feedbackSchema = new mongoose.Schema({
         type: String,
         enum: ['happy', 'neutral', 'sad'],
         required: true
+    },
+    location: {
+        type: String,
+        required: true
     }
 });
 

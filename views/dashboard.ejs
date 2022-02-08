@@ -1,43 +1,77 @@
-<% layout('layout/boilerplate') -%>
+<!DOCTYPE html>
+<html>
 
-    <ul>
-        <li>Happy: <%= countHappy %>
-        </li>
-        <li>Neutral: <%= countNeutral %>
-        </li>
-        <li>Sad: <%= countSad %>
-        </li>
-    </ul>
+<head>
+    <title>JW Admin Dashboard</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-pie.min.js"></script>
+</head>
+
+<body>
+    <div class="d-flex flex-column" style="height: 95vh;">
+
+        <ul>
+            <li>Happy: <%= countHappy %>
+            </li>
+            <li>Neutral: <%= countNeutral %>
+            </li>
+            <li>Sad: <%= countSad %>
+            </li>
+        </ul>
 
 
 
-    <div id="container" style="width: 100%; height: 400px"></div>
-    <script>
-        anychart.onDocumentReady(function () {
+        <div id="container" style="width: 100%; height: 400px"></div>
+        <script>
+            anychart.onDocumentReady(function () {
 
-            // set the data
-            var data = [
-                { x: "Happy", value: <%= countHappy %> , normal:  {fill: "#00FF00"}},
-                { x: "Neutral", value: <%= countNeutral %> , normal:  {fill: "#ADD8E6"}},
-                { x: "Sad", value: <%= countSad %> , normal:  {fill: "#FF0000"}}
-            ];
+                // set the data
+                var data = [
+                    { x: "Happy", value: <%= countHappy %> , normal: { fill: "#00FF00" }},
+                    { x: "Neutral", value: <%= countNeutral %> , normal: { fill: "#ADD8E6" }},
+                    { x: "Sad", value: <%= countSad %> , normal: { fill: "#FF0000" }}
+                ];
 
-        // create the chart
-        var chart = anychart.pie();
+                // create the chart
+                var chart = anychart.pie();
 
-        // set the chart title
-        chart.title("Users Feedback");
+                // set the chart title
+                chart.title("Users Feedback");
 
-        // add the data
-        chart.data(data);
+                // add the data
+                chart.data(data);
 
-        // display the chart in the container
-        chart.container('container');
-        // set legend position
-        chart.legend().position("right");
-        // set items layout
-        chart.legend().itemsLayout("vertical");
-        chart.draw();
+                // display the chart in the container
+                chart.container('container');
+                // set legend position
+                chart.legend().position("right");
+                // set items layout
+                chart.legend().itemsLayout("vertical");
+                chart.draw();
 
-        });
-    </script>
+            });
+        </script>
+
+    </div>
+</body>
+
+</html>
