@@ -1,3 +1,10 @@
+/* Resources:
+Working offline:
+https://itnext.io/how-to-make-your-website-work-offline-b5be47b92adc
+https://medium.com/swlh/how-to-make-your-web-apps-work-offline-be6f27dd28e
+
+*/
+
 const express = require('express');
 const path = require('path');
 //An addition to ejs to be able to create a 'layout' for all pages (optional)
@@ -40,7 +47,7 @@ mongoose.connect(dbUrl)
     });
 
 
-//-----GET all emails in the Database-----
+//-----Show the feedback main screen-----
 app.get('/', (req, res) => {
     try {
         res.render('home');
