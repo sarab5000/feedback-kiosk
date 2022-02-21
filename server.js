@@ -3,6 +3,11 @@ Working offline:
 https://itnext.io/how-to-make-your-website-work-offline-b5be47b92adc
 https://medium.com/swlh/how-to-make-your-web-apps-work-offline-be6f27dd28e
 
+For storing data offline (to later send it when we back online):
+check: IndexedDB API
+and: https://www.npmjs.com/package/idb
+and: https://developer.chrome.com/docs/devtools/storage/indexeddb/?utm_source=devtools
+
 */
 
 const express = require('express');
@@ -29,8 +34,8 @@ app.set('views', path.join(__dirname, 'views'));
 // To serve the public folder that has css, js files
 app.use(express.static(path.join(__dirname + '/public')));
 
-app.use("/css", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
-app.use("/js", express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")));
+app.use("/css", express.static(path.join(__dirname, "node_modules/bootstrap-v4-rtl/dist/css")));
+app.use("/js", express.static(path.join(__dirname, "node_modules/bootstrap-v4-rtl/dist/js")));
 app.use("/js", express.static(path.join(__dirname, "node_modules/jquery/dist")));
 
 console.log("we are in " + process.env.NODE_ENV + " mode");
@@ -51,12 +56,43 @@ mongoose.connect(dbUrl)
 app.get('/', (req, res) => {
     try {
         let location = "default";
+        let pageTitle = "رايك يهمنا";
+
         if('location' in req.query)
         {
             location = req.query.location;
+            app.set('device_location', location);
+        }
+        else if(typeof(app.get('device_location')) !== "undefined")
+        {
+            location = app.get('device_location');
         }
 
-        res.render('home', {location});
+        res.render('home', {location, pageTitle});
+    }
+    catch (e) {
+        console.log(e);
+        res.status(500).send("Internal error");
+    }
+});
+
+app.get('/survey/:mood', (req, res) => {
+    let mood = req.params.mood;
+    let location = "default";
+    try {
+        if(typeof(app.get('device_location')) !== "undefined")
+        {
+            location = app.get('device_location');
+        }
+
+        let pageTitle = "ما الذي جعلك غير راض؟";
+
+        if(mood === "happy")
+        {
+            pageTitle = "ما الذي جعلك راض؟";
+        }
+        
+        res.render('survey', {location, mood, pageTitle});
     }
     catch (e) {
         console.log(e);

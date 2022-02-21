@@ -1,8 +1,15 @@
-<div class="">
+<div class="" style="">
     <img src="/imgs/bottombanner.png" class="img-fluid" style="width:100%;" alt="Responsive image">
+    <b class="page-status">online</b>
 </div>
 
 
-
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+            .register('/sw.js')
+            .then(function () { console.log("Service Worker Registered"); });
+    }
+</script>
 
 <script src="/js/tarek.js"></script>

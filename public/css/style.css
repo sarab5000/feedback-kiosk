@@ -1,3 +1,18 @@
 body {
     
 }
+
+input[type="checkbox"] {
+  height:auto;
+  transform: scale(4);
+}
+
+.form-check {
+  margin-bottom: 3rem;
+  margin-left: 1rem;
+  width: 16rem;
+}
+
+.form-check label {
+  font-size: x-large;
+}
