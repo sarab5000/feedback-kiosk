@@ -16,3 +16,7 @@ input[type="checkbox"] {
 .form-check label {
   font-size: x-large;
 }
+
+.form-check input.form-check-input {
+  margin-right: -2rem;
+}
