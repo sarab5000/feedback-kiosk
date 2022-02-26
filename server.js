@@ -41,11 +41,11 @@ app.use("/js", express.static(path.join(__dirname, "node_modules/jquery/dist")))
 console.log("we are in " + process.env.NODE_ENV + " mode");
 
 const optionsDB = {
-    "wc": [{"text":"النظافة", "id":"wc1"}, {"text":"الاضاءة", "id":"wc2"}, {"text":"الخدمات", "id":"wc3"}, {"text":"الديكور", "id":"wc4"}, {"text":"text-wc5", "id":"wc5"}, {"text":"text-wc6", "id":"wc6"}, {"text":"text-wc7", "id":"wc7"}],
-    "bbq": [{"text":"النظافة", "id":"bbq1"}, {"text":"وجود اماكن مظللة", "id":"bbq2"}, {"text":"اماكن الجلوس والطاولات", "id":"bbq3"}, {"text":"الاجواء العائلية", "id":"bbq4"}],
-    "restaurant": [{"text":"النظافة", "id":"res1"}, {"text":"موظفين ودودين", "id":"res2"}, {"text":"قائمة الطعام", "id":"res3"}, {"text":"الديكور", "id":"res4"}],
-    "slides": [{"text":"تجربة آمنة", "id":"slides1"}, {"text":"ممتعة", "id":"slides2"}, {"text":"موظفين ودودين", "id":"slides3"}],
-    "other": [{"text":"النظافة", "id":"other1"}, {"text":"موظفين ودودين", "id":"other2"}, {"text":"النظافة", "id":"other3"}, {"text":"النظافة", "id":"other4"}, {"text":"النظافة", "id":"other5"}, {"text":"النظافة", "id":"other6"}, {"text":"النظافة", "id":"other7"}, {"text":"النظافة", "id":"other8"}, {"text":"النظافة", "id":"other9"}, {"text":"النظافة", "id":"other10"}]
+    "wc": [{ "text": "النظافة", "id": "wc1" }, { "text": "الاضاءة", "id": "wc2" }, { "text": "الخدمات", "id": "wc3" }, { "text": "الديكور", "id": "wc4" }, { "text": "text-wc5", "id": "wc5" }, { "text": "text-wc6", "id": "wc6" }, { "text": "text-wc7", "id": "wc7" }],
+    "bbq": [{ "text": "النظافة", "id": "bbq1" }, { "text": "وجود اماكن مظللة", "id": "bbq2" }, { "text": "اماكن الجلوس والطاولات", "id": "bbq3" }, { "text": "الاجواء العائلية", "id": "bbq4" }],
+    "restaurant": [{ "text": "النظافة", "id": "res1" }, { "text": "موظفين ودودين", "id": "res2" }, { "text": "قائمة الطعام", "id": "res3" }, { "text": "الديكور", "id": "res4" }],
+    "slides": [{ "text": "تجربة آمنة", "id": "slides1" }, { "text": "ممتعة", "id": "slides2" }, { "text": "موظفين ودودين", "id": "slides3" }],
+    "other": [{ "text": "النظافة", "id": "other1" }, { "text": "موظفين ودودين", "id": "other2" }, { "text": "النظافة", "id": "other3" }, { "text": "النظافة", "id": "other4" }, { "text": "النظافة", "id": "other5" }, { "text": "النظافة", "id": "other6" }, { "text": "النظافة", "id": "other7" }, { "text": "النظافة", "id": "other8" }, { "text": "النظافة", "id": "other9" }, { "text": "النظافة", "id": "other10" }]
 }
 
 //----- Connect to MongoDB -------
@@ -104,17 +104,15 @@ app.get('/survey/:mood/:loc', (req, res) => {
         let location = "def";
 
         let pageTitle = "ما الذي جعلك غير راض؟";
-        if(mood === "happy")
-        {
+        if (mood === "happy") {
             pageTitle = "ما الذي جعلك راض؟";
         }
-        if(mood === "neutral")
-        {
+        if (mood === "neutral") {
             pageTitle = "ما الذي ربما جعلك غير راض؟";
         }
 
         let options = optionsDB[loc];
-        res.render("survey", { location, pageTitle, mood , options});
+        res.render("survey", { location, pageTitle, mood, options });
     }
     catch (e) {
         console.log(e);
@@ -125,13 +123,28 @@ app.get('/survey/:mood/:loc', (req, res) => {
 app.post('/', async (req, res) => {
     try {
         let data = req.body;
+        let mood = data.fname;
+        delete data.fname; //delete the fname field
+        let items = Object.keys(data);
 
         console.log(data);
+        console.log(items);
+
+        const entry = {
+            timestamp: new Date(),
+            mood,
+            checkboxes: items
+        }
+        let newfeedback = new Feedback(entry);
+        let saveToDbResult = await newfeedback.save();
+
+        console.log(saveToDbResult);
+
 
         //let newfeedback = new Feedback(data);
 
         //let saveToDbResult = await newfeedback.save();
-        res.send(data);
+        res.redirect('/');
     }
     catch (e) {
         console.log(e);
@@ -154,11 +167,33 @@ app.get('/dashboard', async (req, res) => {
     }
 });
 
-app.get('/tarek', async (req, res) => {
+app.get('/tarekput', async (req, res) => {
     try {
-        
+        const data = {
+            timestamp: new Date(),
+            mood: "sad",
+            checkboxes: ["wc1", "wc2", "wc5"]
+        }
+        let newfeedback = new Feedback(data);
+        let saveToDbResult = await newfeedback.save();
+        res.send(saveToDbResult);
 
-        res.render('dashboard', { countHappy, countNeutral, countSad });
+    }
+    catch (e) {
+        console.log(e);
+        res.status(500).send("Internal error");
+    }
+});
+
+//This guy counts all accourances of items in optionsDB
+app.get('/counteach', async (req, res) => {
+    try {
+        let result = await Feedback.aggregate([
+            { $unwind: '$checkboxes' },
+            { $group: { _id: {'item': '$checkboxes'}, 'count': { $sum: 1 } } }
+        ])
+
+        res.send(result);
     }
     catch (e) {
         console.log(e);

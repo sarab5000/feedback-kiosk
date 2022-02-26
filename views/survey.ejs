@@ -19,6 +19,10 @@
                 <%- include(`./partial/options`) %>
             </div>
 
+            <div hidden>
+              <input type="text" id="fname" name="fname" value="<%= mood  %>">
+            </div>
+
             <div>
                 <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn btn-primary btn-lg mx-2 px-5"
                     style="float: left;">التالي</button>
