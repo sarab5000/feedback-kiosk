@@ -1,0 +1,15 @@
+<div class="tab">
+<% for (var i=0; i < options.length; i++) { %>
+    <div class="form-check d-flex align-items-center">
+        <input class="form-check-input" type="checkbox" id="checkBox<%= options[i].id %>" name="<%= options[i].id %>">
+        <label class="form-check-label" for="checkBox<%= options[i].id %>">
+            <%= options[i].text %>
+        </label>
+    </div>
+    <% if(((i % 5) == 0) && (i > 0) && (i != options.length-1)){ %>
+</div>
+<div class="tab">
+    <% } %>
+<% } %>
+
+</div>

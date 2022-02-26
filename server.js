@@ -40,6 +40,13 @@ app.use("/js", express.static(path.join(__dirname, "node_modules/jquery/dist")))
 
 console.log("we are in " + process.env.NODE_ENV + " mode");
 
+const optionsDB = {
+    "wc": [{"text":"النظافة", "id":"wc1"}, {"text":"الاضاءة", "id":"wc2"}, {"text":"الخدمات", "id":"wc3"}, {"text":"الديكور", "id":"wc4"}, {"text":"text-wc5", "id":"wc5"}, {"text":"text-wc6", "id":"wc6"}, {"text":"text-wc7", "id":"wc7"}],
+    "bbq": [{"text":"النظافة", "id":"bbq1"}, {"text":"وجود اماكن مظللة", "id":"bbq2"}, {"text":"اماكن الجلوس والطاولات", "id":"bbq3"}, {"text":"الاجواء العائلية", "id":"bbq4"}],
+    "restaurant": [{"text":"النظافة", "id":"res1"}, {"text":"موظفين ودودين", "id":"res2"}, {"text":"قائمة الطعام", "id":"res3"}, {"text":"الديكور", "id":"res4"}],
+    "slides": [{"text":"تجربة آمنة", "id":"slides1"}, {"text":"ممتعة", "id":"slides2"}, {"text":"موظفين ودودين", "id":"slides3"}],
+    "other": [{"text":"النظافة", "id":"other1"}, {"text":"موظفين ودودين", "id":"other2"}, {"text":"النظافة", "id":"other3"}, {"text":"النظافة", "id":"other4"}, {"text":"النظافة", "id":"other5"}, {"text":"النظافة", "id":"other6"}, {"text":"النظافة", "id":"other7"}, {"text":"النظافة", "id":"other8"}, {"text":"النظافة", "id":"other9"}, {"text":"النظافة", "id":"other10"}]
+}
 
 //----- Connect to MongoDB -------
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/jerichoWavesDB';
@@ -58,17 +65,15 @@ app.get('/', (req, res) => {
         let location = "default";
         let pageTitle = "رايك يهمنا";
 
-        if('location' in req.query)
-        {
+        if ('location' in req.query) {
             location = req.query.location;
             app.set('device_location', location);
         }
-        else if(typeof(app.get('device_location')) !== "undefined")
-        {
+        else if (typeof (app.get('device_location')) !== "undefined") {
             location = app.get('device_location');
         }
 
-        res.render('home', {location, pageTitle});
+        res.render('home', { location, pageTitle });
     }
     catch (e) {
         console.log(e);
@@ -78,21 +83,38 @@ app.get('/', (req, res) => {
 
 app.get('/survey/:mood', (req, res) => {
     let mood = req.params.mood;
-    let location = "default";
     try {
-        if(typeof(app.get('device_location')) !== "undefined")
-        {
-            location = app.get('device_location');
-        }
+        let location = "def";
+        let pageTitle = "اختر المكان";
+        res.render("locations", { location, pageTitle, mood });
+    }
+    catch (e) {
+        console.log(e);
+        res.status(500).send("Internal error");
+    }
+});
+
+app.get('/survey/:mood/:loc', (req, res) => {
+    try {
+        let mood = req.params.mood;
+        let loc = req.params.loc;
+
+        console.log(`you are ${mood} about ${loc}`);
+
+        let location = "def";
 
         let pageTitle = "ما الذي جعلك غير راض؟";
-
         if(mood === "happy")
         {
             pageTitle = "ما الذي جعلك راض؟";
         }
-        
-        res.render('survey', {location, mood, pageTitle});
+        if(mood === "neutral")
+        {
+            pageTitle = "ما الذي ربما جعلك غير راض؟";
+        }
+
+        let options = optionsDB[loc];
+        res.render("survey", { location, pageTitle, mood , options});
     }
     catch (e) {
         console.log(e);
@@ -101,18 +123,17 @@ app.get('/survey/:mood', (req, res) => {
 });
 
 app.post('/', async (req, res) => {
-    try{
+    try {
         let data = req.body;
 
         console.log(data);
-   
-        let newfeedback = new Feedback(data);
-    
-        let saveToDbResult = await newfeedback.save();
-        res.send(saveToDbResult);
+
+        //let newfeedback = new Feedback(data);
+
+        //let saveToDbResult = await newfeedback.save();
+        res.send(data);
     }
-    catch(e)
-    {
+    catch (e) {
         console.log(e);
         res.status(500).send("Internal error");
     }
@@ -121,11 +142,23 @@ app.post('/', async (req, res) => {
 
 app.get('/dashboard', async (req, res) => {
     try {
-        const countHappy = await Feedback.countDocuments({"mood":"happy"});
-        const countNeutral = await Feedback.countDocuments({"mood":"neutral"});
-        const countSad = await Feedback.countDocuments({"mood":"sad"});
+        const countHappy = await Feedback.countDocuments({ "mood": "happy" });
+        const countNeutral = await Feedback.countDocuments({ "mood": "neutral" });
+        const countSad = await Feedback.countDocuments({ "mood": "sad" });
 
-        res.render('dashboard', {countHappy, countNeutral, countSad});
+        res.render('dashboard', { countHappy, countNeutral, countSad });
+    }
+    catch (e) {
+        console.log(e);
+        res.status(500).send("Internal error");
+    }
+});
+
+app.get('/tarek', async (req, res) => {
+    try {
+        
+
+        res.render('dashboard', { countHappy, countNeutral, countSad });
     }
     catch (e) {
         console.log(e);

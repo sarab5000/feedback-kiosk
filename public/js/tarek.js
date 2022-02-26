@@ -1,10 +1,13 @@
 console.log("tarek is working");
 
 if (!navigator.onLine) {
-    const statusElem = document.querySelector('.page-status')
-    statusElem.innerHTML = 'offline'
-  }
-  
+  const statusElem = document.querySelector('.page-status')
+  statusElem.innerHTML = 'offline'
+}
+
+
+
+
 // const happyBtn = document.querySelector('#happy');
 // const sadBtn = document.querySelector('#sad');
 // const neutralBtn = document.querySelector('#neutral');

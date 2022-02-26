@@ -1,0 +1,28 @@
+<% layout('layout/boilerplate') -%>
+
+<link rel="stylesheet" href="/css/locations.css">
+
+  <div class="d-flex justify-content-around rtl">
+    <a href="/survey/<%= mood %>/restaurant" class="place d-flex flex-column align-items-center">
+      <img src="/imgs/restaurant.png" class="card-img-top" alt="المطعم">
+      <h5 class="card-title">المطعم</h5>
+    </a>
+    
+    <a href="/survey/<%= mood %>/wc" class="place d-flex flex-column align-items-center">
+      <img src="/imgs/wc.png" class="card-img-top" alt="الحمامات">
+      <h5 class="card-title">الحمامات</h5>
+    </a>
+    <a href="/survey/<%= mood %>/slides" class="place d-flex flex-column align-items-center">
+      <img src="/imgs/slides.png" class="card-img-top" alt="السحاسيل"  >
+      <h5 class="card-title">السحاسيل</h5>
+    </a>
+    <a href="/survey/<%= mood %>/bbq" class="place d-flex flex-column align-items-center justify-content-between">
+      <img src="/imgs/bbq_area.png" class="card-img-top" alt="السحاسيل"  >
+      <h5 class="card-title">منطقة الشواء</h5>
+    </a>
+    <a href="/survey/<%= mood %>/other" class="place d-flex flex-column align-items-center">
+      <img src="/imgs/other.png" class="card-img-top" alt="بدون تحديد مكان">
+      <h5 class="card-title">بدون تحديد مكان</h5>
+    </a>
+
+  </div>
