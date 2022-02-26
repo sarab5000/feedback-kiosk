@@ -1,12 +1,25 @@
 console.log("tarek is working");
 
+let safeToClick = true;
+
 if (!navigator.onLine) {
   const statusElem = document.querySelector('.page-status')
   statusElem.innerHTML = 'offline'
 }
 
+const happyBtn = document.querySelector('#happyFace');
 
+happyBtn.addEventListener('click', (event) => {
+  if (safeToClick) {
+    safeToClick = false;
+    event.target.classList.add('box', 'bounce-5');
+    setTimeout(() => {
+      event.target.classList.remove('box', 'bounce-5');
+      safeToClick = true;
+    }, 3000);
 
+  }
+});
 
 // const happyBtn = document.querySelector('#happy');
 // const sadBtn = document.querySelector('#sad');

@@ -48,6 +48,14 @@ const optionsDB = {
     "other": [{ "text": "النظافة", "id": "other1" }, { "text": "موظفين ودودين", "id": "other2" }, { "text": "النظافة", "id": "other3" }, { "text": "النظافة", "id": "other4" }, { "text": "النظافة", "id": "other5" }, { "text": "النظافة", "id": "other6" }, { "text": "النظافة", "id": "other7" }, { "text": "النظافة", "id": "other8" }, { "text": "النظافة", "id": "other9" }, { "text": "النظافة", "id": "other10" }]
 }
 
+let hashTable = {};
+let locs = Object.keys(optionsDB);
+locs.forEach((loc) => {
+    optionsDB[loc].forEach((obj) => {
+        hashTable[obj["id"]] = obj["text"];
+    });
+});
+
 //----- Connect to MongoDB -------
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/jerichoWavesDB';
 mongoose.connect(dbUrl)
@@ -86,7 +94,15 @@ app.get('/survey/:mood', (req, res) => {
     try {
         let location = "def";
         let pageTitle = "اختر المكان";
-        res.render("locations", { location, pageTitle, mood });
+        if(mood !== "happy")
+        {
+            res.render("locations", { location, pageTitle, mood });
+        }
+        else
+        {
+            res.redirect('/');
+        }
+        
     }
     catch (e) {
         console.log(e);
@@ -167,31 +183,19 @@ app.get('/dashboard', async (req, res) => {
     }
 });
 
-app.get('/tarekput', async (req, res) => {
-    try {
-        const data = {
-            timestamp: new Date(),
-            mood: "sad",
-            checkboxes: ["wc1", "wc2", "wc5"]
-        }
-        let newfeedback = new Feedback(data);
-        let saveToDbResult = await newfeedback.save();
-        res.send(saveToDbResult);
-
-    }
-    catch (e) {
-        console.log(e);
-        res.status(500).send("Internal error");
-    }
-});
 
 //This guy counts all accourances of items in optionsDB
 app.get('/counteach', async (req, res) => {
     try {
-        let result = await Feedback.aggregate([
+        let config = [
             { $unwind: '$checkboxes' },
-            { $group: { _id: {'item': '$checkboxes'}, 'count': { $sum: 1 } } }
-        ])
+            { $group: { _id: { 'item': '$checkboxes' }, 'count': { $sum: 1 } } }
+        ];
+        if ('mood' in req.query) {
+            config.unshift({ $match: { mood: req.query.mood } });
+        }
+
+        let result = await Feedback.aggregate(config);
 
         res.send(result);
     }
