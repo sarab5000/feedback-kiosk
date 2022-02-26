@@ -13,6 +13,18 @@ happyBtn.addEventListener('click', (event) => {
   if (safeToClick) {
     safeToClick = false;
     event.target.classList.add('box', 'bounce-5');
+
+    axios.post('/', {
+      mood: 'happy',
+      location: 'overall'
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
     setTimeout(() => {
       event.target.classList.remove('box', 'bounce-5');
       safeToClick = true;
@@ -20,6 +32,16 @@ happyBtn.addEventListener('click', (event) => {
 
   }
 });
+
+document.addEventListener("click", handler, true);
+
+function handler(e) {
+  if (!safeToClick) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+}
+
 
 // const happyBtn = document.querySelector('#happy');
 // const sadBtn = document.querySelector('#sad');

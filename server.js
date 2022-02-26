@@ -94,15 +94,13 @@ app.get('/survey/:mood', (req, res) => {
     try {
         let location = "def";
         let pageTitle = "اختر المكان";
-        if(mood !== "happy")
-        {
+        if (mood !== "happy") {
             res.render("locations", { location, pageTitle, mood });
         }
-        else
-        {
+        else {
             res.redirect('/');
         }
-        
+
     }
     catch (e) {
         console.log(e);
@@ -113,11 +111,9 @@ app.get('/survey/:mood', (req, res) => {
 app.get('/survey/:mood/:loc', (req, res) => {
     try {
         let mood = req.params.mood;
-        let loc = req.params.loc;
+        let location = req.params.loc;
 
-        console.log(`you are ${mood} about ${loc}`);
-
-        let location = "def";
+        console.log(`you are ${mood} about ${location}`);
 
         let pageTitle = "ما الذي جعلك غير راض؟";
         if (mood === "happy") {
@@ -127,7 +123,7 @@ app.get('/survey/:mood/:loc', (req, res) => {
             pageTitle = "ما الذي ربما جعلك غير راض؟";
         }
 
-        let options = optionsDB[loc];
+        let options = optionsDB[location];
         res.render("survey", { location, pageTitle, mood, options });
     }
     catch (e) {
@@ -139,27 +135,24 @@ app.get('/survey/:mood/:loc', (req, res) => {
 app.post('/', async (req, res) => {
     try {
         let data = req.body;
-        let mood = data.fname;
-        delete data.fname; //delete the fname field
-        let items = Object.keys(data);
-
         console.log(data);
-        console.log(items);
+        let mood = data.mood;
+        delete data.mood; //delete the fname field
+        let location = data.location;
+        delete data.location;
+        let items = Object.keys(data);
 
         const entry = {
             timestamp: new Date(),
             mood,
+            location,
             checkboxes: items
         }
+        console.log(entry);
         let newfeedback = new Feedback(entry);
         let saveToDbResult = await newfeedback.save();
 
         console.log(saveToDbResult);
-
-
-        //let newfeedback = new Feedback(data);
-
-        //let saveToDbResult = await newfeedback.save();
         res.redirect('/');
     }
     catch (e) {
@@ -174,8 +167,10 @@ app.get('/dashboard', async (req, res) => {
         const countHappy = await Feedback.countDocuments({ "mood": "happy" });
         const countNeutral = await Feedback.countDocuments({ "mood": "neutral" });
         const countSad = await Feedback.countDocuments({ "mood": "sad" });
+        const wcNeutral = await findTotals("neutral", "wc");
+        const wcSad = await findTotals("sad", "wc");
 
-        res.render('dashboard', { countHappy, countNeutral, countSad });
+        res.render('dashboard', { hashTable, countHappy, countNeutral, countSad , wcNeutral, wcSad});
     }
     catch (e) {
         console.log(e);
@@ -187,17 +182,10 @@ app.get('/dashboard', async (req, res) => {
 //This guy counts all accourances of items in optionsDB
 app.get('/counteach', async (req, res) => {
     try {
-        let config = [
-            { $unwind: '$checkboxes' },
-            { $group: { _id: { 'item': '$checkboxes' }, 'count': { $sum: 1 } } }
-        ];
-        if ('mood' in req.query) {
-            config.unshift({ $match: { mood: req.query.mood } });
-        }
+        let wcNeutral = await findTotals("neutral", "wc");
+        let wcSad = await findTotals("sad", "wc");
 
-        let result = await Feedback.aggregate(config);
-
-        res.send(result);
+        res.send([wcNeutral, wcSad]);
     }
     catch (e) {
         console.log(e);
@@ -216,5 +204,15 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
+const findTotals = async (mood, location) => {
+    let config = [
+        { $match: { $and: [{ "mood": mood }, { "location": location }] } },
+        { $unwind: '$checkboxes' },
+        { $group: { _id: { 'item': '$checkboxes' }, 'count': { $sum: 1 } } }
+    ];
 
+    let result = await Feedback.aggregate(config);
+
+    return result;
+}
 

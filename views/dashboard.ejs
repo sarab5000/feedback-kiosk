@@ -72,6 +72,26 @@
         </script>
 
     </div>
+
+
+    <div>
+        <h2>WC statistics: (neutral)</h2>
+        <% for(let i = 0; i < wcNeutral.length; i++){ %>
+            <p><%= hashTable[wcNeutral[i]["_id"]["item"]] %>: <%= wcNeutral[i]["count"] %></p>
+        <% } %>
+    </div>
+    <div>
+        <h2>WC statistics: (sad)</h2>
+        <% for(let i = 0; i < wcSad.length; i++){ %>
+            <p><%= hashTable[wcSad[i]["_id"]["item"]] %>: <%= wcSad[i]["count"] %></p>
+        <% } %>
+    </div>
+    <div>
+        <h2>Restaurant statistics:</h2>
+    </div>
+    <div>
+        <h2>BBQ area statistics:</h2>
+    </div>
 </body>
 
 </html>
