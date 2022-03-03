@@ -10,6 +10,8 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+    <link rel="stylesheet" href="/css/dashboard.css" type="text/css">
+
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -24,6 +26,7 @@
 
     <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-core.min.js"></script>
     <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-pie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -73,17 +76,20 @@
 
     </div>
 
+    <div class="container" style="width: 50%;">
+    <canvas id="myChart" width="200" height="100" style="border:1px solid #000000;"></canvas>
+</div>
 
-    <div>
+    <div class="neutral-stats">
         <h2>WC statistics: (neutral)</h2>
-        <% for(let i = 0; i < wcNeutral.length; i++){ %>
-            <p><%= hashTable[wcNeutral[i]["_id"]["item"]] %>: <%= wcNeutral[i]["count"] %></p>
+        <% for(let i = 0; i < statsObj.wcNeutral.length; i++){ %>
+            <p><%= hashTable[statsObj.wcNeutral[i]["_id"]["item"]] %>: <%= statsObj.wcNeutral[i]["count"] %></p>
         <% } %>
     </div>
-    <div>
+    <div class="sad-stats">
         <h2>WC statistics: (sad)</h2>
-        <% for(let i = 0; i < wcSad.length; i++){ %>
-            <p><%= hashTable[wcSad[i]["_id"]["item"]] %>: <%= wcSad[i]["count"] %></p>
+        <% for(let i = 0; i < statsObj.wcSad.length; i++){ %>
+            <p><%= hashTable[statsObj.wcSad[i]["_id"]["item"]] %>: <%= statsObj.wcSad[i]["count"] %></p>
         <% } %>
     </div>
     <div>
@@ -92,6 +98,8 @@
     <div>
         <h2>BBQ area statistics:</h2>
     </div>
+
+    <script src="/js/dashboard.js"></script>
 </body>
 
 </html>

@@ -170,15 +170,40 @@ app.get('/dashboard', async (req, res) => {
         const countHappy = await Feedback.countDocuments({ "mood": "happy" });
         const countNeutral = await Feedback.countDocuments({ "mood": "neutral" });
         const countSad = await Feedback.countDocuments({ "mood": "sad" });
+        
+        const restNeutral = await findTotals("neutral", "restaurant");
         const wcNeutral = await findTotals("neutral", "wc");
-        const wcSad = await findTotals("sad", "wc");
+        const slidesNeutral = await findTotals("neutral", "slides");
+        const bbqNeutral = await findTotals("neutral", "bbq");
 
-        res.render('dashboard', { hashTable, countHappy, countNeutral, countSad , wcNeutral, wcSad});
+
+        const restSad = await findTotals("sad", "restaurant");
+        const wcSad = await findTotals("sad", "wc");
+        const slidesSad = await findTotals("sad", "slides");
+        const bbqSad = await findTotals("sad", "bbq");
+
+        const statsObj = {
+            restNeutral,
+            wcNeutral,
+            slidesNeutral,
+            bbqNeutral,
+            restSad,
+            wcSad,
+            slidesSad,
+            bbqSad
+        }
+
+        res.render('dashboard', { hashTable, countHappy, countNeutral, countSad , statsObj});
     }
     catch (e) {
         console.log(e);
         res.status(500).send("Internal error");
     }
+});
+
+//dashboard.js should call this API, and it should return all relevant data
+app.get('getDashboardData', (req, res)=>{
+    
 });
 
 

@@ -1,3 +1,8 @@
+//If the user is not finished with this survey after 60 seconds -> go back to home page
+setTimeout(function () {
+    document.location.href="/";
+}, 60000);
+
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab
