@@ -17,6 +17,9 @@ const feedbackSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    phone: {
+        type: String
+    },
     checkboxes: [{type: String}]
 });
 

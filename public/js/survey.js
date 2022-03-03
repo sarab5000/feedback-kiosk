@@ -37,7 +37,7 @@ function nextPrev(n) {
             $("#exampleModalCenter").modal('show');
             setTimeout(function () {
                 document.getElementById("feedbackForm").submit();
-            }, 4000);
+            }, 40000);
         }
         return false;
     }
@@ -52,4 +52,20 @@ function nextPrev(n) {
 
     // Otherwise, display the correct tab:
     showTab(currentTab);
+}
+
+function submitWithPhoneNumber()
+{
+    console.log("with");
+    const userPhone = document.querySelector('#user-phone');
+    const phoneInputField = document.querySelector('#phoneid');
+    phoneInputField.value = userPhone.value;
+    document.getElementById("feedbackForm").submit();
+
+}
+
+function submitWithoutPhoneNumber()
+{
+    console.log("without");
+    document.getElementById("feedbackForm").submit();
 }

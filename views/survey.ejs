@@ -1,11 +1,24 @@
 <% layout('layout/boilerplate') -%>
 
   <!-------------------- Modal ----------------------->
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header justify-content-center p-5">
           <h5 class="modal-title" id="exampleModalLongTitle">تم إرسال تقييمك شكرا جزيلا</h5>
+          <!-- Material background input -->
+        </div>
+        <div class="modal-body">
+          <p class="rtl">هل يمكننا التواصل معك؟</p>
+          <p class="rtl">رقم الموبايل:</p>
+          <input type="text" class="form-control rtl" id="user-phone">
+          <div class="mt-2">
+            <button type="button" id="phoneBtn" onclick="submitWithPhoneNumber()"
+              class="btn btn-primary btn-lg mx-2 px-5" style="float: right;">نعم ارغب بالتواصل</button>
+            <button type="button" id="phoneBtn" onclick="submitWithoutPhoneNumber()"
+              class="btn btn-outline-dark btn-lg mx-2" style="float: right;">لا ارغب</button>
+          </div>
         </div>
       </div>
     </div>
@@ -13,30 +26,34 @@
   <!------------------------------------------------>
 
   <!-------------------- The form ----------------------->
-    <div class="d-flex align-items-center rtl" style="width: 90%; margin-right: 4rem;">
-        <form id="feedbackForm" action="/" method="post" style="width: 100%;">
-            <div class="d-flex flex-wrap">
-                <%- include(`./partial/options`) %>
-            </div>
+  <div class="d-flex align-items-center rtl" style="width: 90%; margin-right: 4rem;">
+    <form id="feedbackForm" action="/" method="post" style="width: 100%;">
+      <div class="d-flex flex-wrap">
+        <%- include(`./partial/options`) %>
+      </div>
 
-            <div hidden>
-              <input type="text" id="moodid" name="mood" value="<%= mood  %>">
-            </div>
+      <div hidden>
+        <input type="text" id="moodid" name="mood" value="<%= mood  %>">
+      </div>
 
-            <div hidden>
-              <input type="text" id="locationid" name="location" value="<%= location  %>">
-            </div>
+      <div hidden>
+        <input type="text" id="locationid" name="location" value="<%= location  %>">
+      </div>
 
-            <div>
-                <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn btn-primary btn-lg mx-2 px-5"
-                    style="float: left;">التالي</button>
-                <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn btn-primary btn-lg"
-                    style="float: left;">السابق</button>
-                <a class="btn btn-outline-dark btn-lg mx-2" href="/" role="button" style="float: left;">الغاء</a>
-            </div>
+      <div hidden>
+        <input type="text" id="phoneid" name="phone" value="">
+      </div>
 
-        </form>
-    </div>
- <!------------------------------------------------------>
+      <div>
+        <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn btn-primary btn-lg mx-2 px-5"
+          style="float: left;">التالي</button>
+        <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn btn-primary btn-lg"
+          style="float: left;">السابق</button>
+        <a class="btn btn-outline-dark btn-lg mx-2" href="/" role="button" style="float: left;">الغاء</a>
+      </div>
 
-    <script src="/js/survey.js"></script>
+    </form>
+  </div>
+  <!------------------------------------------------------>
+
+  <script src="/js/survey.js"></script>

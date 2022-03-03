@@ -41,7 +41,7 @@ app.use("/js", express.static(path.join(__dirname, "node_modules/jquery/dist")))
 console.log("we are in " + process.env.NODE_ENV + " mode");
 
 const optionsDB = {
-    "wc": [{ "text": "النظافة", "id": "wc1" }, { "text": "الاضاءة", "id": "wc2" }, { "text": "الخدمات", "id": "wc3" }, { "text": "الديكور", "id": "wc4" }, { "text": "text-wc5", "id": "wc5" }, { "text": "text-wc6", "id": "wc6" }, { "text": "text-wc7", "id": "wc7" }],
+    "wc": [{ "text": "النظافة", "id": "wc1" }, { "text": "الاضاءة", "id": "wc2" }, { "text": "الخدمات", "id": "wc3" }, { "text": "الديكور", "id": "wc4" }, { "text": "text-wc5", "id": "wc5" }, { "text": "الاشياء", "id": "wc6" }, { "text": "text-wc7", "id": "wc7" }],
     "bbq": [{ "text": "النظافة", "id": "bbq1" }, { "text": "وجود اماكن مظللة", "id": "bbq2" }, { "text": "اماكن الجلوس والطاولات", "id": "bbq3" }, { "text": "الاجواء العائلية", "id": "bbq4" }],
     "restaurant": [{ "text": "النظافة", "id": "res1" }, { "text": "موظفين ودودين", "id": "res2" }, { "text": "قائمة الطعام", "id": "res3" }, { "text": "الديكور", "id": "res4" }],
     "slides": [{ "text": "تجربة آمنة", "id": "slides1" }, { "text": "ممتعة", "id": "slides2" }, { "text": "موظفين ودودين", "id": "slides3" }],
@@ -140,12 +140,15 @@ app.post('/', async (req, res) => {
         delete data.mood; //delete the fname field
         let location = data.location;
         delete data.location;
+        let phone = data.phone;
+        delete data.phone;
         let items = Object.keys(data);
 
         const entry = {
             timestamp: new Date(),
             mood,
             location,
+            phone,
             checkboxes: items
         }
         console.log(entry);

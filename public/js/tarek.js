@@ -9,29 +9,34 @@ if (!navigator.onLine) {
 
 const happyBtn = document.querySelector('#happyFace');
 
-happyBtn.addEventListener('click', (event) => {
-  if (safeToClick) {
-    safeToClick = false;
-    event.target.classList.add('box', 'bounce-5');
+if(happyBtn != null)
+{
+  happyBtn.addEventListener('click', (event) => {
+    if (safeToClick) {
+      safeToClick = false;
+      event.target.classList.add('box', 'bounce-5');
+  
+      axios.post('/', {
+        mood: 'happy',
+        location: 'overall'
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  
+      setTimeout(() => {
+        event.target.classList.remove('box', 'bounce-5');
+        safeToClick = true;
+      }, 3000);
+  
+    }
+  });
 
-    axios.post('/', {
-      mood: 'happy',
-      location: 'overall'
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+}
 
-    setTimeout(() => {
-      event.target.classList.remove('box', 'bounce-5');
-      safeToClick = true;
-    }, 3000);
-
-  }
-});
 
 document.addEventListener("click", handler, true);
 
