@@ -41,11 +41,11 @@ app.use("/js", express.static(path.join(__dirname, "node_modules/jquery/dist")))
 console.log("we are in " + process.env.NODE_ENV + " mode");
 
 const optionsDB = {
-    "wc": [{ "text": "النظافة", "id": "wc1" }, { "text": "الاضاءة", "id": "wc2" }, { "text": "الخدمات", "id": "wc3" }, { "text": "الديكور", "id": "wc4" }, { "text": "text-wc5", "id": "wc5" }, { "text": "الاشياء", "id": "wc6" }, { "text": "text-wc7", "id": "wc7" }],
-    "bbq": [{ "text": "النظافة", "id": "bbq1" }, { "text": "وجود اماكن مظللة", "id": "bbq2" }, { "text": "اماكن الجلوس والطاولات", "id": "bbq3" }, { "text": "الاجواء العائلية", "id": "bbq4" }],
-    "restaurant": [{ "text": "النظافة", "id": "res1" }, { "text": "موظفين ودودين", "id": "res2" }, { "text": "قائمة الطعام", "id": "res3" }, { "text": "الديكور", "id": "res4" }],
-    "slides": [{ "text": "تجربة آمنة", "id": "slides1" }, { "text": "ممتعة", "id": "slides2" }, { "text": "موظفين ودودين", "id": "slides3" }],
-    "other": [{ "text": "النظافة", "id": "other1" }, { "text": "موظفين ودودين", "id": "other2" }, { "text": "النظافة", "id": "other3" }, { "text": "النظافة", "id": "other4" }, { "text": "النظافة", "id": "other5" }, { "text": "النظافة", "id": "other6" }, { "text": "النظافة", "id": "other7" }, { "text": "النظافة", "id": "other8" }, { "text": "النظافة", "id": "other9" }, { "text": "النظافة", "id": "other10" }]
+    "wc": [{ "en-text": "Hygiene", "ar-text": "النظافة", "id": "wc1" }, { "en-text": "lighting", "ar-text": "الاضاءة", "id": "wc2" }, { "en-text": "Services", "ar-text": "الخدمات", "id": "wc3" }, { "en-text": "Dicoration", "ar-text": "الديكور", "id": "wc4" }],
+    "bbq": [{ "en-text": "Hygiene", "ar-text": "النظافة", "id": "bbq1" }, { "en-text": "No areas with shades", "ar-text": "عدم وجود اماكن مظللة", "id": "bbq2" }, { "en-text": "Sitting places and tables", "ar-text": "اماكن الجلوس والطاولات", "id": "bbq3" }, { "en-text": "Not a family friendly enviroment", "ar-text": "الاجواء غير عائلية", "id": "bbq4" }],
+    "restaurant": [{ "ar-text": "النظافة", "id": "res1" }, { "ar-text": "موظفين غير ودودين", "id": "res2" }, { "ar-text": "قائمة الطعام", "id": "res3" }, { "ar-text": "الديكور", "id": "res4" }],
+    "slides": [{ "ar-text": "تجربة غير آمنة", "id": "slides1" }, { "ar-text": "غير ممتعة", "id": "slides2" }, { "ar-text": "موظفين غير ودودين", "id": "slides3" }],
+    "other": [{  "en-text": "Hygiene", "ar-text": "النظافة", "id": "other1" }, {  "en-text": "Mean employees", "ar-text": "موظفين غير ودودين", "id": "other2" }, {  "en-text": "other3", "ar-text": "شيء3", "id": "other3" }, {  "en-text": "other4", "ar-text": "شيء4", "id": "other4" }, {  "en-text": "other5", "ar-text": "شيء5", "id": "other5" }]
 }
 
 let hashTable = {};

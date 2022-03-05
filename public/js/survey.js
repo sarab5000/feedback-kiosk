@@ -1,7 +1,43 @@
 //If the user is not finished with this survey after 60 seconds -> go back to home page
 setTimeout(function () {
+    Cookies.set('language', 'ar', { path: '/' });
     document.location.href="/";
 }, 60000);
+
+
+//------------ Language stuff ----------------
+const lang = Cookies.get('language');
+document.getElementById("home_page_title").innerHTML = "ما الذي ربما لم يعجك؟";
+
+if (lang) {
+    console.log("yeah there is a lang cookie: " + lang);
+    if (lang == "en") {
+        document.getElementById("home_page_title").innerHTML = "What are the things you did NOT like";
+        document.getElementById("cancel-btn").innerHTML = "Cancel";
+    }
+}
+else {
+}
+//---------------------------------------
+
+
+const ar_options = document.getElementById("ar-options");
+const en_options = document.getElementById("en-options");
+
+//Remove not compatibale language options:
+if (lang) {
+    console.log("yeah there is a lang cookie");
+    if (lang == "en") {
+        ar_options.remove();
+    }
+    else
+    {
+        en_options.remove();
+    }
+}
+else {
+    en_options.remove();
+}
 
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -16,12 +52,21 @@ function showTab(n) {
     if (n == 0) {
         document.getElementById("prevBtn").style.display = "none";
     } else {
+        if (lang == "en") {
+            document.getElementById("prevBtn").innerHTML = "Back";
+        }
         document.getElementById("prevBtn").style.display = "inline";
     }
     if (n == (x.length - 1)) {
         document.getElementById("nextBtn").innerHTML = "إرسال";
+        if (lang == "en") {
+            document.getElementById("nextBtn").innerHTML = "Send";
+        }
     } else {
         document.getElementById("nextBtn").innerHTML = "التالي";
+        if (lang == "en") {
+            document.getElementById("nextBtn").innerHTML = "Next";
+        }
     }
 
 }
@@ -41,6 +86,7 @@ function nextPrev(n) {
             });
             $("#exampleModalCenter").modal('show');
             setTimeout(function () {
+                Cookies.set('language', 'ar', { path: '/' });
                 document.getElementById("feedbackForm").submit();
             }, 40000);
         }
@@ -59,18 +105,35 @@ function nextPrev(n) {
     showTab(currentTab);
 }
 
-function submitWithPhoneNumber()
-{
+function submitWithPhoneNumber() {
     console.log("with");
     const userPhone = document.querySelector('#user-phone');
     const phoneInputField = document.querySelector('#phoneid');
     phoneInputField.value = userPhone.value;
+    Cookies.set('language', 'ar', { path: '/' });
     document.getElementById("feedbackForm").submit();
 
 }
 
-function submitWithoutPhoneNumber()
-{
+function submitWithoutPhoneNumber() {
     console.log("without");
+    Cookies.set('language', 'ar', { path: '/' });
     document.getElementById("feedbackForm").submit();
 }
+
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }

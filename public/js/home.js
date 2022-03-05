@@ -1,37 +1,56 @@
-console.log("tarek is working");
+console.log("home script is working");
 
-let safeToClick = true;
-
-if (!navigator.onLine) {
-  const statusElem = document.querySelector('.page-status')
-  statusElem.innerHTML = 'offline'
+//Language stuff:
+const lang = Cookies.get('language');
+document.getElementById("home_page_title").innerHTML = "رايك يهمنا - كيف كانت تجربتك؟";
+if(lang)
+{
+  console.log("yeah there is a lang cookie: " + lang);
+  if(lang == "en")
+  {
+    document.getElementById("home_page_title").innerHTML = "Your Opinion Matters";
+  }
 }
+else
+{
+}
+
+
+//Run this after the page is fully loaded:
+window.onload = () => {
+  if (!navigator.onLine) {
+    const statusElem = document.getElementById("page-status");
+    statusElem.innerHTML = 'offline'
+  }
+}
+
+//To prevent spamming the emojis with repeated clicks
+let safeToClick = true;
 
 const happyBtn = document.querySelector('#happyFace');
 
-if(happyBtn != null)
-{
+if (happyBtn != null) {
   happyBtn.addEventListener('click', (event) => {
     if (safeToClick) {
       safeToClick = false;
       event.target.classList.add('box', 'bounce-5');
-  
+
       axios.post('/', {
         mood: 'happy',
         location: 'overall'
       })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
       setTimeout(() => {
         event.target.classList.remove('box', 'bounce-5');
         safeToClick = true;
       }, 3000);
-  
+
     }
   });
 
