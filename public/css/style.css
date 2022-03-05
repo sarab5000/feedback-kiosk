@@ -16,9 +16,9 @@ input[type="checkbox"] {
 }
 
 .form-check {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   margin-left: 1rem;
-  width: 20rem;
+  width: 25rem;
 }
 
 .form-check label {
