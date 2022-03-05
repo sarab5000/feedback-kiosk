@@ -4,6 +4,12 @@ body {
   font-family: 'Amiri', serif !important;
 }
 
+#home_page_title {
+  margin-top: 4rem;
+  font-weight: bold;
+  font-size: 3rem;
+}
+
 input[type="checkbox"] {
   height:auto;
   transform: scale(4);
