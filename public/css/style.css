@@ -22,7 +22,7 @@ input[type="checkbox"] {
 }
 
 .form-check label {
-  font-size: x-large;
+  font-size: 2rem;
 }
 
 .form-check input.form-check-input {
