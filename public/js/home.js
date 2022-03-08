@@ -17,12 +17,12 @@ else
 
 
 //Run this after the page is fully loaded:
-window.onload = () => {
-  if (!navigator.onLine) {
-    const statusElem = document.getElementById("page-status");
-    statusElem.innerHTML = 'offline'
-  }
-}
+// window.onload = () => {
+//   if (!navigator.onLine) {
+//     const statusElem = document.getElementById("page-status");
+//     statusElem.innerHTML = 'offline'
+//   }
+// }
 
 //To prevent spamming the emojis with repeated clicks
 let safeToClick = true;
@@ -47,6 +47,7 @@ if (happyBtn != null) {
         });
 
       setTimeout(() => {
+        console.log("Now it is safe to click");
         event.target.classList.remove('box', 'bounce-5');
         safeToClick = true;
       }, 3000);

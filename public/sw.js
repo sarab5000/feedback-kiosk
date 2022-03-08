@@ -1,7 +1,9 @@
 /*
 
-It is stopped for now.
-To be activated later.
+TODO: it is stopped now, turn it on later
+
+check this:
+https://medium.com/@onejohi/offline-web-apps-using-local-storage-and-service-workers-5d40467117b9
 
 */
 
@@ -10,15 +12,34 @@ To be activated later.
 // const cacheName = 'jwkiosk';
 
 // self.addEventListener('install', function (e) {
-//     console.log('registering the service worker');
+//     console.log('registering the service worker...');
 
 //     e.waitUntil(
 //         caches.open(cacheName).then(function (cache) {
 //             return cache.addAll([
 //                 '/',
+//                 '/imgs/bbq_area.png',
+//                 '/imgs/bottombanner.png',
+//                 '/imgs/happy.gif',
 //                 '/imgs/logo2.png',
-//                 '/survey/happy/',
-//                 '/css/bootstrap-rtl.min.css'
+//                 '/imgs/mainbackground.jpeg',
+//                 '/imgs/neutral.gif',
+//                 '/imgs/restaurant.png',
+//                 '/imgs/slides.png',
+//                 '/imgs/wc.png',
+//                 '/css/locations.css',
+//                 '/css/style.css',
+//                 '/js/everywhere.js',
+//                 '/js/home.js',
+//                 '/js/js.cookie.js',
+//                 '/js/locations.js',
+//                 '/js/survey.js',
+//                 '/cache-polyfill.js',
+//                 '/survey/neutral/',
+//                 '/survey/sad/',
+//                 '/css/bootstrap-rtl.min.css',
+//                 '/js/bootstrap.min.js',
+//                 '/js/jquery.min.js'
 //             ]);
 //         })
 //     );

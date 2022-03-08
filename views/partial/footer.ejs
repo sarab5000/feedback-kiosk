@@ -1,6 +1,5 @@
 <div class="" style="">
     <img src="/imgs/bottombanner.png" class="img-fluid" style="width:100%;" alt="Responsive image">
-    <b id="page-status">online</b>
 </div>
 
 
@@ -8,7 +7,7 @@
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker
             .register('/sw.js')
-            .then(function () { console.log("Service Worker Registered"); });
+            .then(function () { console.log("Service Worker Registered"); }, function () {console.log('Service worker registration failed')});
     }
 
     const theLang = Cookies.get('language');
