@@ -1,5 +1,8 @@
 console.log("home script is working");
 
+const tabletId = window.localStorage.getItem("tabletId");
+console.log("Hi, the tablet id is: " + tabletId);
+
 //Language stuff:
 const lang = Cookies.get('language');
 document.getElementById("home_page_title").innerHTML = "رايك يهمنا - كيف كانت تجربتك؟";
@@ -37,7 +40,8 @@ if (happyBtn != null) {
 
       axios.post('/', {
         mood: 'happy',
-        location: 'overall'
+        location: 'overall',
+        tabletId: tabletId
       })
         .then(function (response) {
           console.log(response);

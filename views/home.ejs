@@ -12,4 +12,10 @@
     </div>
   </div>
 
+  <script>
+    if("<%=  tabletId %>" != "unknown")
+    {
+      window.localStorage.setItem("tabletId", "<%=  tabletId %>");
+    }
+  </script>
   <script src="/js/home.js"></script>

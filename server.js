@@ -22,7 +22,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 
-
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // to be able to parse JSON body submitted to POST request
@@ -40,6 +39,7 @@ app.use("/js", express.static(path.join(__dirname, "node_modules/jquery/dist")))
 
 console.log("we are in " + process.env.NODE_ENV + " mode");
 
+// To easily convert it to CSV: https://www.convertcsv.com/json-to-csv.htm
 const optionsDB = {
     "wc": [{ "en-text": "Hygiene", "ar-text": "النظافة", "id": "wc1" }, { "en-text": "Employees are not friendly", "ar-text": "موظفين غير ودودين", "id": "wc2" }, { "en-text": "Problems with the toilets (shattaf/flush/sink)", "ar-text": "مشكلة بالادوات الصحية (السيفون/الشطافة/المغاسل)", "id": "wc3" }, { "en-text": "lighting", "ar-text": "الاضاءة", "id": "wc4" }, { "en-text": "Services", "ar-text": "الخدمات", "id": "wc5" }, { "en-text": "Decoration", "ar-text": "الديكور", "id": "wc6" }, { "en-text": "Other things", "ar-text": "غير ذلك", "id": "wc7" }],
     "bbq": [{ "en-text": "Hygiene", "ar-text": "النظافة", "id": "bbq1" }, { "en-text": "Employees are not friendly", "ar-text": "موظفين غير ودودين", "id": "bbq2" }, { "en-text": "No shaded places", "ar-text": "عدم وجود اماكن مظللة", "id": "bbq3" }, { "en-text": "Sitting places and tables", "ar-text": "اماكن الجلوس والطاولات", "id": "bbq4" }, { "en-text": "Not a family friendly enviroment", "ar-text": "الاجواء غير عائلية", "id": "bbq5" }, { "en-text": "Other things", "ar-text": "غير ذلك", "id": "bbq6" }],
@@ -70,18 +70,14 @@ mongoose.connect(dbUrl)
 //-----Show the feedback main screen-----
 app.get('/', (req, res) => {
     try {
-        let location = "default";
+        let tabletId = req.query.tabletId;
+        if(typeof tabletId === "undefined")
+        {
+            tabletId = "unknown";
+        }
+        console.log(`tablet ID is ${tabletId}`);
         let pageTitle = "رايك يهمنا";
-
-        if ('location' in req.query) {
-            location = req.query.location;
-            app.set('device_location', location);
-        }
-        else if (typeof (app.get('device_location')) !== "undefined") {
-            location = app.get('device_location');
-        }
-
-        res.render('home', { location, pageTitle });
+        res.render('home', { pageTitle, tabletId });
     }
     catch (e) {
         console.log(e);
@@ -92,10 +88,9 @@ app.get('/', (req, res) => {
 app.get('/survey/:mood', (req, res) => {
     let mood = req.params.mood;
     try {
-        let location = "def";
         let pageTitle = "اختر المكان";
         if (mood !== "happy") {
-            res.render("locations", { location, pageTitle, mood });
+            res.render("locations", { pageTitle, mood });
         }
         else {
             res.redirect('/');
@@ -142,6 +137,8 @@ app.post('/', async (req, res) => {
         delete data.location;
         let phone = data.phone;
         delete data.phone;
+        let tabletId = data.tabletId;
+        delete data.tabletId;
         let items = Object.keys(data);
 
         const entry = {
@@ -149,6 +146,7 @@ app.post('/', async (req, res) => {
             mood,
             location,
             phone,
+            tabletId,
             checkboxes: items
         }
         console.log(entry);
@@ -219,6 +217,15 @@ app.get('/counteach', async (req, res) => {
         console.log(e);
         res.status(500).send("Internal error");
     }
+});
+
+app.get('/deleteall', async (req, res)=>{
+    let result = await Feedback.remove({
+        "timestamp": {
+            $lt: new Date("2022-03-10T01:00:00.000Z")
+        }
+    })
+    res.send(result);
 });
 
 

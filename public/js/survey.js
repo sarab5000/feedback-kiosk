@@ -1,7 +1,7 @@
 //If the user is not finished with this survey after 60 seconds -> go back to home page
 setTimeout(function () {
     Cookies.set('language', 'ar', { path: '/' });
-    document.location.href="/";
+    document.location.href = "/";
 }, 60000);
 
 
@@ -30,8 +30,7 @@ if (lang) {
     if (lang == "en") {
         ar_options.remove();
     }
-    else
-    {
+    else {
         en_options.remove();
     }
 }
@@ -86,6 +85,9 @@ function nextPrev(n) {
             });
             $("#exampleModalCenter").modal('show');
             setTimeout(function () {
+                const tabletId = window.localStorage.getItem("tabletId");
+                const tabletInputField = document.querySelector('#tabletid');
+                tabletInputField.value = tabletId;
                 Cookies.set('language', 'ar', { path: '/' });
                 document.getElementById("feedbackForm").submit();
             }, 40000);
@@ -110,6 +112,11 @@ function submitWithPhoneNumber() {
     const userPhone = document.querySelector('#user-phone');
     const phoneInputField = document.querySelector('#phoneid');
     phoneInputField.value = userPhone.value;
+
+    const tabletId = window.localStorage.getItem("tabletId");
+    const tabletInputField = document.querySelector('#tabletid');
+    tabletInputField.value = tabletId;
+
     Cookies.set('language', 'ar', { path: '/' });
     document.getElementById("feedbackForm").submit();
 
@@ -117,6 +124,12 @@ function submitWithPhoneNumber() {
 
 function submitWithoutPhoneNumber() {
     console.log("without");
+
+    const tabletId = window.localStorage.getItem("tabletId");
+    const tabletInputField = document.querySelector('#tabletid');
+    tabletInputField.value = tabletId;
+
+
     Cookies.set('language', 'ar', { path: '/' });
     document.getElementById("feedbackForm").submit();
 }
@@ -127,13 +140,13 @@ function getCookie(cname) {
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(';');
     for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
     }
     return "";
-  }
+}

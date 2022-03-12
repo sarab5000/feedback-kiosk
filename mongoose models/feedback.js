@@ -20,6 +20,10 @@ const feedbackSchema = new mongoose.Schema({
     phone: {
         type: String
     },
+    tabletId: {
+        type: String,
+        required: false
+    },
     checkboxes: [{type: String}]
 });
 
