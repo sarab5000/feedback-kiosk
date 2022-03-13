@@ -41,18 +41,18 @@ console.log("we are in " + process.env.NODE_ENV + " mode");
 
 // To easily convert it to CSV: https://www.convertcsv.com/json-to-csv.htm
 const optionsDB = {
-    "wc": [{ "en-text": "Hygiene", "ar-text": "النظافة", "id": "wc1" }, { "en-text": "Employees are not friendly", "ar-text": "موظفين غير ودودين", "id": "wc2" }, { "en-text": "Problems with the toilets (shattaf/flush/sink)", "ar-text": "مشكلة بالادوات الصحية (السيفون/الشطافة/المغاسل)", "id": "wc3" }, { "en-text": "lighting", "ar-text": "الاضاءة", "id": "wc4" }, { "en-text": "Services", "ar-text": "الخدمات", "id": "wc5" }, { "en-text": "Decoration", "ar-text": "الديكور", "id": "wc6" }, { "en-text": "Other things", "ar-text": "غير ذلك", "id": "wc7" }],
-    "bbq": [{ "en-text": "Hygiene", "ar-text": "النظافة", "id": "bbq1" }, { "en-text": "Employees are not friendly", "ar-text": "موظفين غير ودودين", "id": "bbq2" }, { "en-text": "No shaded places", "ar-text": "عدم وجود اماكن مظللة", "id": "bbq3" }, { "en-text": "Sitting places and tables", "ar-text": "اماكن الجلوس والطاولات", "id": "bbq4" }, { "en-text": "Not a family friendly enviroment", "ar-text": "الاجواء غير عائلية", "id": "bbq5" }, { "en-text": "Other things", "ar-text": "غير ذلك", "id": "bbq6" }],
-    "restaurant": [{ "en-text": "Hygiene", "ar-text": "النظافة", "id": "res1" }, { "en-text": "Employees are not friendly", "ar-text": "موظفين غير ودودين", "id": "res2" }, { "en-text": "The food menu", "ar-text": "قائمة الطعام", "id": "res3" }, { "en-text": "The decoration", "ar-text": "الديكور", "id": "res4" }, { "en-text": "Other things", "ar-text": "غير ذلك", "id": "res5" }],
-    "slides": [{ "en-text": "Hygiene", "ar-text": "النظافة", "id": "slides1" }, { "en-text": "Employees are not friendly", "ar-text": "موظفين غير ودودين", "id": "slides2" }, { "en-text": "Not safe", "ar-text": "تجربة غير آمنة", "id": "slides3" }, { "en-text": "Not fun", "ar-text": "غير ممتعة", "id": "slides4" }, { "en-text": "Other things", "ar-text": "غير ذلك", "id": "slides5" }],
-    "other": [{  "en-text": "Hygiene", "ar-text": "النظافة", "id": "other1" }, {  "en-text": "Employees are not friendly", "ar-text": "موظفين غير ودودين", "id": "other2" }, {  "en-text": "Not safe", "ar-text": "المكان غير آمن", "id": "other3" }, {  "en-text": "Not fun", "ar-text": "المكان غير ممتع", "id": "other4" }, {  "en-text": "Expensive", "ar-text": "الاسعار غير معقولة", "id": "other5" }, { "en-text": "Food", "ar-text": "الطعام", "id": "other6" }, { "en-text": "No shaded places", "ar-text": "عدم وجود اماكن مظللة", "id": "other7" }, { "en-text": "Other things", "ar-text": "غير ذلك", "id": "other8" }]
+    "wc": [{ "en-text": "Hygiene", "ar-text": "النظافة", "id": "wc1" }, { "en-text": "Employees are not friendly", "ar-text": "موظفين غير ودودين", "id": "wc2" }, { "en-text": "Problems with the toilets (shattaf/flush/sink)", "ar-text": "مشكلة بالادوات الصحية (السيفون/الشطافة/المغاسل)", "id": "wc3" }, { "en-text": "lighting", "ar-text": "الاضاءة", "id": "wc4" }, { "en-text": "Services", "ar-text": "الخدمات", "id": "wc5" }, { "en-text": "Decoration", "ar-text": "الديكور", "id": "wc6" }, { "en-text": "Other things", "ar-text": "غير ذلك", "id": "wc99" }],
+    "bbq": [{ "en-text": "Hygiene", "ar-text": "النظافة", "id": "bbq1" }, { "en-text": "Employees are not friendly", "ar-text": "موظفين غير ودودين", "id": "bbq2" }, { "en-text": "No shaded places", "ar-text": "عدم وجود اماكن مظللة", "id": "bbq3" }, { "en-text": "Sitting places and tables", "ar-text": "اماكن الجلوس والطاولات", "id": "bbq4" }, { "en-text": "Not a family friendly enviroment", "ar-text": "الاجواء غير عائلية", "id": "bbq5" }, { "en-text": "Other things", "ar-text": "غير ذلك", "id": "bbq99" }],
+    "restaurant": [{ "en-text": "Hygiene", "ar-text": "النظافة", "id": "res1" }, { "en-text": "Employees are not friendly", "ar-text": "موظفين غير ودودين", "id": "res2" }, { "en-text": "The food menu", "ar-text": "قائمة الطعام", "id": "res3" }, { "en-text": "The decoration", "ar-text": "الديكور", "id": "res4" }, { "en-text": "Not enough food/drinks options", "ar-text": "عدم وجود خيارات طعام/شراب كافية", "id": "res6" }, { "en-text": "Other things", "ar-text": "غير ذلك", "id": "res99" }],
+    "slides": [{ "en-text": "Hygiene", "ar-text": "النظافة", "id": "slides1" }, { "en-text": "Employees are not friendly", "ar-text": "موظفين غير ودودين", "id": "slides2" }, { "en-text": "Not safe", "ar-text": "تجربة غير آمنة", "id": "slides3" }, { "en-text": "Not fun", "ar-text": "غير ممتعة", "id": "slides4" }, { "en-text": "Other things", "ar-text": "غير ذلك", "id": "slides99" }],
+    "other": [{ "en-text": "Hygiene", "ar-text": "النظافة", "id": "other1" }, { "en-text": "Employees are not friendly", "ar-text": "موظفين غير ودودين", "id": "other2" }, { "en-text": "Not safe", "ar-text": "المكان غير آمن", "id": "other3" }, { "en-text": "Not fun", "ar-text": "المكان غير ممتع", "id": "other4" }, { "en-text": "Expensive", "ar-text": "الاسعار غير معقولة", "id": "other5" }, { "en-text": "Food", "ar-text": "الطعام", "id": "other6" }, { "en-text": "No shaded places", "ar-text": "عدم وجود اماكن مظللة", "id": "other7" }, { "en-text": "Other things", "ar-text": "غير ذلك", "id": "other99" }]
 }
 
 let hashTable = {};
 let locs = Object.keys(optionsDB);
 locs.forEach((loc) => {
     optionsDB[loc].forEach((obj) => {
-        hashTable[obj["id"]] = obj["text"];
+        hashTable[obj["id"]] = obj["ar-text"];
     });
 });
 
@@ -71,8 +71,7 @@ mongoose.connect(dbUrl)
 app.get('/', (req, res) => {
     try {
         let tabletId = req.query.tabletId;
-        if(typeof tabletId === "undefined")
-        {
+        if (typeof tabletId === "undefined") {
             tabletId = "unknown";
         }
         console.log(`tablet ID is ${tabletId}`);
@@ -163,35 +162,48 @@ app.post('/', async (req, res) => {
 });
 
 
+// app.get('/dashboard', async (req, res) => {
+//     try {
+//         const countHappy = await Feedback.countDocuments({ "mood": "happy" });
+//         const countNeutral = await Feedback.countDocuments({ "mood": "neutral" });
+//         const countSad = await Feedback.countDocuments({ "mood": "sad" });
+
+//         const restNeutral = await findTotals("neutral", "restaurant");
+//         const wcNeutral = await findTotals("neutral", "wc");
+//         const slidesNeutral = await findTotals("neutral", "slides");
+//         const bbqNeutral = await findTotals("neutral", "bbq");
+
+
+//         const restSad = await findTotals("sad", "restaurant");
+//         const wcSad = await findTotals("sad", "wc");
+//         const slidesSad = await findTotals("sad", "slides");
+//         const bbqSad = await findTotals("sad", "bbq");
+
+//         const statsObj = {
+//             restNeutral,
+//             wcNeutral,
+//             slidesNeutral,
+//             bbqNeutral,
+//             restSad,
+//             wcSad,
+//             slidesSad,
+//             bbqSad
+//         }
+
+//         res.render('dashboard', { hashTable, countHappy, countNeutral, countSad , statsObj});
+//     }
+//     catch (e) {
+//         console.log(e);
+//         res.status(500).send("Internal error");
+//     }
+// });
+
+
+
+//dashboard.js should call this API, and it should return all relevant data
 app.get('/dashboard', async (req, res) => {
     try {
-        const countHappy = await Feedback.countDocuments({ "mood": "happy" });
-        const countNeutral = await Feedback.countDocuments({ "mood": "neutral" });
-        const countSad = await Feedback.countDocuments({ "mood": "sad" });
-        
-        const restNeutral = await findTotals("neutral", "restaurant");
-        const wcNeutral = await findTotals("neutral", "wc");
-        const slidesNeutral = await findTotals("neutral", "slides");
-        const bbqNeutral = await findTotals("neutral", "bbq");
-
-
-        const restSad = await findTotals("sad", "restaurant");
-        const wcSad = await findTotals("sad", "wc");
-        const slidesSad = await findTotals("sad", "slides");
-        const bbqSad = await findTotals("sad", "bbq");
-
-        const statsObj = {
-            restNeutral,
-            wcNeutral,
-            slidesNeutral,
-            bbqNeutral,
-            restSad,
-            wcSad,
-            slidesSad,
-            bbqSad
-        }
-
-        res.render('dashboard', { hashTable, countHappy, countNeutral, countSad , statsObj});
+        res.render('dashboard');
     }
     catch (e) {
         console.log(e);
@@ -199,11 +211,28 @@ app.get('/dashboard', async (req, res) => {
     }
 });
 
-//dashboard.js should call this API, and it should return all relevant data
-app.get('getDashboardData', (req, res)=>{
-    
+app.get('/dashboard-all-data', async (req, res) => {
+    try {
+        const allData = await Feedback.find({});
+        res.send(allData);
+    }
+    catch (e) {
+        console.log(e);
+        res.status(500).send("Internal error");
+    }
+
 });
 
+app.get('/dashboard-hashtable', (req, res) => {
+    try {
+        res.send(hashTable);
+    }
+    catch (e) {
+        console.log(e);
+        res.status(500).send("Internal error");
+    }
+
+});
 
 //This guy counts all accourances of items in optionsDB
 app.get('/counteach', async (req, res) => {
@@ -219,7 +248,7 @@ app.get('/counteach', async (req, res) => {
     }
 });
 
-app.get('/deleteall', async (req, res)=>{
+app.get('/deleteall', async (req, res) => {
     let result = await Feedback.remove({
         "timestamp": {
             $lt: new Date("2022-03-10T01:00:00.000Z")

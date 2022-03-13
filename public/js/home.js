@@ -6,16 +6,13 @@ console.log("Hi, the tablet id is: " + tabletId);
 //Language stuff:
 const lang = Cookies.get('language');
 document.getElementById("home_page_title").innerHTML = "رايك يهمنا - كيف كانت تجربتك؟";
-if(lang)
-{
+if (lang) {
   console.log("yeah there is a lang cookie: " + lang);
-  if(lang == "en")
-  {
+  if (lang == "en") {
     document.getElementById("home_page_title").innerHTML = "Your Opinion Matters";
   }
 }
-else
-{
+else {
 }
 
 
