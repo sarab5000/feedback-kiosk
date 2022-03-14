@@ -64,13 +64,14 @@ axios.get('/dashboard-hashtable', {
                 overallSpan.textContent = allOverall.length;
 
 
-                
+
                 let restaurantData = getAllAxes(allRestaurant);
                 let wcData = getAllAxes(allWc);
                 let slidesData = getAllAxes(allSlides);
                 let bbqData = getAllAxes(allBbq);
                 let overallData = getAllAxes(allOverall);
 
+                drawPieChart('moodsChart', ["سعيد", "متوسط", "حزين"],[allHappy.length, allNeutral.length, allSad.length]);
                 drawColumnGraph('restaurantChart', restaurantData);
                 drawColumnGraph('wcChart', wcData);
                 drawColumnGraph('slidesChart', slidesData);
@@ -98,6 +99,9 @@ const getAllCheckboxes = (arrayOfObj) => {
 
 const getArabicBoxes = (boxesId) => {
     return boxesId.map((itemId) => {
+        if (String(hashTable[itemId]) === "undefined") {
+            return "غير ذلك";
+        }
         return hashTable[itemId];
     });
 }
@@ -120,7 +124,7 @@ const drawColumnGraph = (chartId, dataz) => {
         data: {
             //labels: xAxis,
             datasets: [{
-                label: '# of Votes',
+                label: 'عدد الاصوات',
                 data: dataz,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -151,6 +155,26 @@ const drawColumnGraph = (chartId, dataz) => {
     });
 }
 
+const drawPieChart = (chartId, labels ,data) => {
+    const ctx = document.getElementById(chartId).getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels,
+            datasets: [{
+                label: 'My First Dataset',
+                data,
+                backgroundColor: [
+                    'rgb(102, 255, 102)',
+                    'rgb(102, 255, 255)',
+                    'rgb(255, 102, 140)'
+                ],
+                hoverOffset: 4
+            }]
+        }
+    });
+}
+
 
 function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
@@ -170,6 +194,6 @@ const getAllAxes = (allStuff) => {
     let allBoxes = getAllCheckboxes(allStuff);
     let arabicBoxes = getArabicBoxes(allBoxes);
     let getCounts = getAllCounts(arabicBoxes);
-    
+
     return getCounts;
 }

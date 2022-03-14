@@ -25,57 +25,56 @@
 <body>
 
     <div class="container my-3">
-        <div class="d-flex">
-            <ul class="list-group my-3">
-                <li class="list-group-item">Happy: <span id="happyTotal">0</span></li>
-                <li class="list-group-item">Neutral: <span id="neutralTotal">0</span></li>
-                <li class="list-group-item">Sad: <span id="sadTotal">0</span></li>
-            </ul>
-            <div class="">
-
+        <div class="d-flex flex-column">
+            <div class="" style="width: 50%;">
+                <canvas id="moodsChart" style="border:1px solid #000000;"></canvas>
             </div>
-        </div>
-        <div class="d-flex">
             <ul class="list-group my-3">
-                <li class="list-group-item">Restaurants: <span id="restaurantTotal">0</span></li>
-                <li class="list-group-item">WC: <span id="wcTotal">0</span></li>
-                <li class="list-group-item">Slides: <span id="slidesTotal">0</span></li>
-                <li class="list-group-item">BBQ: <span id="bbqTotal">0</span></li>
-                <li class="list-group-item">Overall: <span id="overallTotal">0</span></li>
+                <li class="list-group-item">سعيد: <span id="happyTotal">0</span></li>
+                <li class="list-group-item">متوسط: <span id="neutralTotal">0</span></li>
+                <li class="list-group-item">حزين: <span id="sadTotal">0</span></li>
             </ul>
-            <div class="">
+            
 
-            </div>
         </div>
     </div>
+    <div class="container d-flex flex-column">
+        <h2>تسجيلات التغذية الراجعة لكل مكان</h2>
+        <ul class="list-group my-3">
+            <li class="list-group-item">المطعم: <span id="restaurantTotal">0</span></li>
+            <li class="list-group-item">الحمامات: <span id="wcTotal">0</span></li>
+            <li class="list-group-item">السحاسيل: <span id="slidesTotal">0</span></li>
+            <li class="list-group-item">منطقة الشواء: <span id="bbqTotal">0</span></li>
+            <li class="list-group-item">بدون تحديد مكان: <span id="overallTotal">0</span></li>
+        </ul>
+        <div class="">
 
-    <div class="container">
-
-        <div id="allData"></div>
-
-        <div class="neutral-stats">
-            <h2>WC statistics: (neutral)</h2>
         </div>
-        <div class="sad-stats">
-            <h2>WC statistics: (sad)</h2>
+    </div>
+    </div>
+
+    <div class="container d-flex flex-column">
+
+        <div>
+            <h2>الحمامات</h2>
             <div class="container" style="width: 50%;">
                 <canvas id="wcChart" width="200" height="100" style="border:1px solid #000000;"></canvas>
             </div>
         </div>
         <div>
-            <h2>Restaurant statistics:</h2>
+            <h2>المطعم</h2>
             <div class="container" style="width: 50%;">
                 <canvas id="restaurantChart" width="200" height="100" style="border:1px solid #000000;"></canvas>
             </div>
         </div>
         <div>
-            <h2>BBQ area statistics:</h2>
+            <h2>منطقة الشواء</h2>
             <div class="container" style="width: 50%;">
                 <canvas id="bbqChart" width="200" height="100" style="border:1px solid #000000;"></canvas>
             </div>
         </div>
         <div class="my-3">
-            <h2>Slides statistics:</h2>
+            <h2>السحاسيل</h2>
             <div class="container" style="width: 50%;">
                 <canvas id="slidesChart" width="200" height="100" style="border:1px solid #000000;"></canvas>
             </div>
