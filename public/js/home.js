@@ -45,7 +45,14 @@ if (happyBtn != null) {
       let msg = {
         'form_data': dataToSend
       }
-      navigator.serviceWorker.controller.postMessage(msg)  // <-This line right here sends our data to sw.js
+
+      try{
+        navigator.serviceWorker.controller.postMessage(msg)  // <-This line right here sends our data to sw.js
+      }
+      catch(e){
+        
+      }
+      
 
       axios.post('/', dataToSend)
         .then(function (response) {
