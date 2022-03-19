@@ -35,11 +35,19 @@ if (happyBtn != null) {
       safeToClick = false;
       event.target.classList.add('box', 'bounce-5');
 
-      axios.post('/', {
+      let dataToSend = {
         mood: 'happy',
         location: 'overall',
         tabletId: tabletId
-      })
+      }
+
+      // send message to service worker via postMessage
+      let msg = {
+        'form_data': dataToSend
+      }
+      navigator.serviceWorker.controller.postMessage(msg)  // <-This line right here sends our data to sw.js
+
+      axios.post('/', dataToSend)
         .then(function (response) {
           console.log(response);
         })
@@ -51,7 +59,7 @@ if (happyBtn != null) {
         console.log("Now it is safe to click");
         event.target.classList.remove('box', 'bounce-5');
         safeToClick = true;
-      }, 3000);
+      }, 2000);
 
     }
   });

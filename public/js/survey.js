@@ -118,8 +118,7 @@ function submitWithPhoneNumber() {
     tabletInputField.value = tabletId;
 
     Cookies.set('language', 'ar', { path: '/' });
-    document.getElementById("feedbackForm").submit();
-
+    sendDataToServer();
 }
 
 function submitWithoutPhoneNumber() {
@@ -129,9 +128,8 @@ function submitWithoutPhoneNumber() {
     const tabletInputField = document.querySelector('#tabletid');
     tabletInputField.value = tabletId;
 
-
     Cookies.set('language', 'ar', { path: '/' });
-    document.getElementById("feedbackForm").submit();
+    sendDataToServer();
 }
 
 
@@ -149,4 +147,35 @@ function getCookie(cname) {
         }
     }
     return "";
+}
+
+function sendDataToServer() {
+    const formPairs = $('#feedbackForm').serializeArray();
+    let objToSend = {};
+    formPairs.forEach((item) => {
+        objToSend[item.name] = item.value;
+    });
+
+    console.log(objToSend);
+
+    // send message to service worker via postMessage
+    let msg = {
+        'form_data': objToSend
+    }
+    navigator.serviceWorker.controller.postMessage(msg)  // <-This line right here sends our data to sw.js
+
+    try{
+        axios.post('/', objToSend)
+        .then(function (response) {
+            console.log(response);
+            document.location.href = "/";
+        })
+        .catch(function (error) {
+            console.log(error);
+            document.location.href = "/#error";
+        });
+    }catch(e){
+        document.location.href = "/";
+    }
+    
 }

@@ -36,6 +36,7 @@ app.use(express.static(path.join(__dirname + '/public')));
 app.use("/css", express.static(path.join(__dirname, "node_modules/bootstrap-v4-rtl/dist/css")));
 app.use("/js", express.static(path.join(__dirname, "node_modules/bootstrap-v4-rtl/dist/js")));
 app.use("/js", express.static(path.join(__dirname, "node_modules/jquery/dist")));
+app.use("/js", express.static(path.join(__dirname, "node_modules/axios/dist")));
 
 console.log("we are in " + process.env.NODE_ENV + " mode");
 
@@ -74,7 +75,7 @@ app.get('/', (req, res) => {
         if (typeof tabletId === "undefined") {
             tabletId = "unknown";
         }
-        console.log(`tablet ID is ${tabletId}`);
+        console.log(`Server: tablet ID from URL is ${tabletId}`);
         let pageTitle = "رايك يهمنا";
         res.render('home', { pageTitle, tabletId });
     }
@@ -129,7 +130,7 @@ app.get('/survey/:mood/:loc', (req, res) => {
 app.post('/', async (req, res) => {
     try {
         let data = req.body;
-        console.log(data);
+        console.log("Row data recieved:", data);
         let mood = data.mood;
         delete data.mood; //delete the fname field
         let location = data.location;
@@ -148,11 +149,10 @@ app.post('/', async (req, res) => {
             tabletId,
             checkboxes: items
         }
-        console.log(entry);
         let newfeedback = new Feedback(entry);
         let saveToDbResult = await newfeedback.save();
 
-        console.log(saveToDbResult);
+        console.log("DB response: ", saveToDbResult);
         res.redirect('/');
     }
     catch (e) {
@@ -249,11 +249,12 @@ app.get('/counteach', async (req, res) => {
 });
 
 app.get('/deleteall', async (req, res) => {
-    let result = await Feedback.remove({
-        "timestamp": {
-            $lt: new Date("2022-03-10T01:00:00.000Z")
-        }
-    })
+    let result = await Feedback.remove({})
+    // let result = await Feedback.remove({
+    //     "timestamp": {
+    //         $lt: new Date("2022-03-10T01:00:00.000Z")
+    //     }
+    // })
     res.send(result);
 });
 

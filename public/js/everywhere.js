@@ -17,3 +17,11 @@ function changeLanguage(lang) {
   else
     console.log("Local Storage Not Supported")
 })();
+
+// Detect offline/online mode in simple way.
+// window.addEventListener('online',  updateOnlineStatus);
+// window.addEventListener('offline', updateOnlineStatus);
+
+// function updateOnlineStatus(event) {
+//   console.log(`Are you online: ${navigator.onLine}`);
+// }

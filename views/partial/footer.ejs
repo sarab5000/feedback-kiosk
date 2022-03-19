@@ -5,16 +5,31 @@
 
 <script>
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
-            .register('/sw.js')
-            .then(function () { console.log("Service Worker Registered"); }, function () {console.log('Service worker registration failed')});
+        window.addEventListener('load', () => {
+            navigator.serviceWorker
+                .register('/sw.js')
+                .then(function () { console.log("Service Worker Registered"); }, function () { console.log('Service worker registration failed') });
+
+            navigator.serviceWorker.ready.then(function (registration) {
+                console.log('Service Worker Ready')
+                return registration.sync.register('sendFormData')
+            }).then(function () {
+                console.log('sync event registered')
+            }).catch(function () {
+                // system was unable to register for a sync,
+                // this could be an OS-level restriction
+                console.log('sync registration failed')
+            });
+        });
+
+
     }
 
     const theLang = Cookies.get('language');
     if (theLang == 'en') {
         document.getElementById("english-lang-btn").style.visibility = 'hidden';
     }
-    else if(theLang == 'ar'){
+    else {
         document.getElementById("arabic-lang-btn").style.visibility = 'hidden';
     }
 
