@@ -5,7 +5,9 @@
 
 <script>
     if ('serviceWorker' in navigator) {
+        console.log("Found Service worker, let's register after load");
         window.addEventListener('load', () => {
+            console.log("Load: registering service worker");
             navigator.serviceWorker
                 .register('/sw.js')
                 .then(function () { console.log("Service Worker Registered"); }, function () { console.log('Service worker registration failed') });
@@ -21,8 +23,9 @@
                 console.log('sync registration failed')
             });
         });
-
-
+    }else
+    {
+        console.log("There is not service worker in this browser!");
     }
 
     const theLang = Cookies.get('language');
