@@ -25,7 +25,6 @@ const filterBtn = document.getElementById("filterBtn");
 filterBtn.addEventListener('click', () => {
     const filterDate = document.getElementById("dateSelect");
     if (filterDate.value.length !== 0) {
-        console.log(filterDate.value);
         const filteredData = allData.filter((item) => {
             const itemTimestamp = item.timestamp.substr(0, 10);
             return itemTimestamp === filterDate.value;

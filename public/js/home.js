@@ -36,6 +36,7 @@ if (happyBtn != null) {
       event.target.classList.add('box', 'bounce-5');
 
       let dataToSend = {
+        timestamp: new Date(),
         mood: 'happy',
         location: 'overall',
         tabletId: tabletId
