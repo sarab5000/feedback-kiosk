@@ -87,14 +87,13 @@ function nextPrev(n) {
             // Show the modal
             $(`#exampleModalCenter_${lang}`).modal('show');
 
-            // TODO incemment this:
-            // setTimeout(function () {
-            //     const tabletId = window.localStorage.getItem("tabletId");
-            //     const tabletInputField = document.querySelector('#tabletid');
-            //     tabletInputField.value = tabletId;
-            //     Cookies.set('language', 'ar', { path: '/' });
-            //     document.getElementById("feedbackForm").submit();
-            // }, 40000);
+            setTimeout(function () {
+                const tabletId = window.localStorage.getItem("tabletId");
+                const tabletInputField = document.querySelector('#tabletid');
+                tabletInputField.value = tabletId;
+                Cookies.set('language', 'ar', { path: '/' });
+                document.getElementById("feedbackForm").submit();
+            }, 40000);
         }
         return false;
     }

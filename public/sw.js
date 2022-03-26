@@ -1,7 +1,5 @@
 /*
 
-TODO: it is stopped now, turn it on later
-
 check this:
 https://medium.com/@onejohi/offline-web-apps-using-local-storage-and-service-workers-5d40467117b9
 
@@ -18,7 +16,7 @@ const cacheName = 'jwkiosk';
 
 self.addEventListener('install', function (e) {
     console.log('registering the service worker...');
-
+    self.skipWaiting();
     e.waitUntil(
         caches.open(cacheName).then(function (cache) {
             return cache.addAll([
