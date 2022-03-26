@@ -79,18 +79,22 @@ function nextPrev(n) {
         //...the form gets submitted:
         document.getElementById("feedbackForm").onclick = () => {
             console.log("hey man");
-            $("#exampleModalCenter").modal({
+            // Prevent Bootstrap Modal from disappearing when clicking outside or pressing escape:
+            $(`#exampleModalCenter_${lang}`).modal({
                 backdrop: 'static',
                 keyboard: false
             });
-            $("#exampleModalCenter").modal('show');
-            setTimeout(function () {
-                const tabletId = window.localStorage.getItem("tabletId");
-                const tabletInputField = document.querySelector('#tabletid');
-                tabletInputField.value = tabletId;
-                Cookies.set('language', 'ar', { path: '/' });
-                document.getElementById("feedbackForm").submit();
-            }, 40000);
+            // Show the modal
+            $(`#exampleModalCenter_${lang}`).modal('show');
+
+            // TODO incemment this:
+            // setTimeout(function () {
+            //     const tabletId = window.localStorage.getItem("tabletId");
+            //     const tabletInputField = document.querySelector('#tabletid');
+            //     tabletInputField.value = tabletId;
+            //     Cookies.set('language', 'ar', { path: '/' });
+            //     document.getElementById("feedbackForm").submit();
+            // }, 40000);
         }
         return false;
     }
