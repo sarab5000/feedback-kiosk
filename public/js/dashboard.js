@@ -6,7 +6,7 @@ let allRestaurant;
 let allWc;
 let allSlides;
 let allBbq;
-let allOverall;
+let allOther;
 let hashTable;
 
 
@@ -17,7 +17,7 @@ const restaurantSpan = document.getElementById("restaurantTotal");
 const wcSpan = document.getElementById("wcTotal");
 const slidesSpan = document.getElementById("slidesTotal");
 const bbqSpan = document.getElementById("bbqTotal");
-const overallSpan = document.getElementById("overallTotal");
+const otherSpan = document.getElementById("otherTotal");
 
 axios.get('/dashboard-hashtable', {
 })
@@ -50,8 +50,8 @@ axios.get('/dashboard-hashtable', {
                 allBbq = allData.filter((item) => {
                     return item.location === "bbq";
                 });
-                allOverall = allData.filter((item) => {
-                    return item.location === "overall";
+                allOther = allData.filter((item) => {
+                    return item.location === "other";
                 });
 
                 happySpan.textContent = allHappy.length;
@@ -61,7 +61,7 @@ axios.get('/dashboard-hashtable', {
                 wcSpan.textContent = allWc.length;
                 slidesSpan.textContent = allSlides.length;
                 bbqSpan.textContent = allBbq.length;
-                overallSpan.textContent = allOverall.length;
+                otherSpan.textContent = allOther.length;
 
 
 
@@ -69,14 +69,16 @@ axios.get('/dashboard-hashtable', {
                 let wcData = getAllAxes(allWc);
                 let slidesData = getAllAxes(allSlides);
                 let bbqData = getAllAxes(allBbq);
-                let overallData = getAllAxes(allOverall);
+                let otherData = getAllAxes(allOther);
 
                 drawPieChart('moodsChart', ["سعيد", "متوسط", "حزين"],[allHappy.length, allNeutral.length, allSad.length]);
                 drawColumnGraph('restaurantChart', restaurantData);
                 drawColumnGraph('wcChart', wcData);
                 drawColumnGraph('slidesChart', slidesData);
                 drawColumnGraph('bbqChart', bbqData);
-                drawColumnGraph('overallChart', overallData);
+                drawColumnGraph('otherChart', otherData);
+
+                console.log(otherData);
 
             })
             .catch(function (error) {
