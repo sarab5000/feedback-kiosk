@@ -5,7 +5,7 @@ const feedbackSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    timestamp_local: {
+    timestamp_short: {
         type: String
     },
     mood: {

@@ -18,6 +18,30 @@ const wcSpan = document.getElementById("wcTotal");
 const slidesSpan = document.getElementById("slidesTotal");
 const bbqSpan = document.getElementById("bbqTotal");
 const otherSpan = document.getElementById("otherTotal");
+const filterSpan = document.getElementById("filterMsg");
+
+const filterBtn = document.getElementById("filterBtn");
+
+filterBtn.addEventListener('click', () => {
+    const filterDate = document.getElementById("dateSelect");
+    if (filterDate.value.length !== 0) {
+        console.log(filterDate.value);
+        const filteredData = allData.filter((item) => {
+            const itemTimestamp = item.timestamp.substr(0, 10);
+            return itemTimestamp === filterDate.value;
+        });
+        if(filteredData.length === 0)
+        {
+            filterSpan.innerHTML = "لا يوجد بيانات في هذا التاريخ";
+        }
+        else
+        {
+            filterSpan.innerHTML = "";
+        }
+
+        fillTheData(filteredData);
+    }
+});
 
 axios.get('/dashboard-hashtable', {
 })
@@ -28,58 +52,7 @@ axios.get('/dashboard-hashtable', {
         })
             .then(function (response) {
                 allData = response.data;
-
-                allHappy = allData.filter((item) => {
-                    return item.mood === "happy";
-                });
-                allNeutral = allData.filter((item) => {
-                    return item.mood === "neutral";
-                });
-                allSad = allData.filter((item) => {
-                    return item.mood === "sad";
-                });
-                allRestaurant = allData.filter((item) => {
-                    return item.location === "restaurant";
-                });
-                allWc = allData.filter((item) => {
-                    return item.location === "wc";
-                });
-                allSlides = allData.filter((item) => {
-                    return item.location === "slides";
-                });
-                allBbq = allData.filter((item) => {
-                    return item.location === "bbq";
-                });
-                allOther = allData.filter((item) => {
-                    return item.location === "other";
-                });
-
-                happySpan.textContent = allHappy.length;
-                neutralSpan.textContent = allNeutral.length;
-                sadSpan.textContent = allSad.length;
-                restaurantSpan.textContent = allRestaurant.length;
-                wcSpan.textContent = allWc.length;
-                slidesSpan.textContent = allSlides.length;
-                bbqSpan.textContent = allBbq.length;
-                otherSpan.textContent = allOther.length;
-
-
-
-                let restaurantData = getAllAxes(allRestaurant);
-                let wcData = getAllAxes(allWc);
-                let slidesData = getAllAxes(allSlides);
-                let bbqData = getAllAxes(allBbq);
-                let otherData = getAllAxes(allOther);
-
-                drawPieChart('moodsChart', ["سعيد", "متوسط", "حزين"],[allHappy.length, allNeutral.length, allSad.length]);
-                drawColumnGraph('restaurantChart', restaurantData);
-                drawColumnGraph('wcChart', wcData);
-                drawColumnGraph('slidesChart', slidesData);
-                drawColumnGraph('bbqChart', bbqData);
-                drawColumnGraph('otherChart', otherData);
-
-                console.log(otherData);
-
+                fillTheData(allData);
             })
             .catch(function (error) {
                 console.log(error);
@@ -89,6 +62,58 @@ axios.get('/dashboard-hashtable', {
         console.log(error);
     });
 
+
+
+const fillTheData = (allData) => {
+    allHappy = allData.filter((item) => {
+        return item.mood === "happy";
+    });
+    allNeutral = allData.filter((item) => {
+        return item.mood === "neutral";
+    });
+    allSad = allData.filter((item) => {
+        return item.mood === "sad";
+    });
+    allRestaurant = allData.filter((item) => {
+        return item.location === "restaurant";
+    });
+    allWc = allData.filter((item) => {
+        return item.location === "wc";
+    });
+    allSlides = allData.filter((item) => {
+        return item.location === "slides";
+    });
+    allBbq = allData.filter((item) => {
+        return item.location === "bbq";
+    });
+    allOther = allData.filter((item) => {
+        return item.location === "other";
+    });
+
+    happySpan.textContent = allHappy.length;
+    neutralSpan.textContent = allNeutral.length;
+    sadSpan.textContent = allSad.length;
+    restaurantSpan.textContent = allRestaurant.length;
+    wcSpan.textContent = allWc.length;
+    slidesSpan.textContent = allSlides.length;
+    bbqSpan.textContent = allBbq.length;
+    otherSpan.textContent = allOther.length;
+
+
+
+    let restaurantData = getAllAxes(allRestaurant);
+    let wcData = getAllAxes(allWc);
+    let slidesData = getAllAxes(allSlides);
+    let bbqData = getAllAxes(allBbq);
+    let otherData = getAllAxes(allOther);
+
+    drawPieChart('moodsChart', ["سعيد", "متوسط", "حزين"], [allHappy.length, allNeutral.length, allSad.length]);
+    drawColumnGraph('restaurantChart', restaurantData);
+    drawColumnGraph('wcChart', wcData);
+    drawColumnGraph('slidesChart', slidesData);
+    drawColumnGraph('bbqChart', bbqData);
+    drawColumnGraph('otherChart', otherData);
+}
 
 const getAllCheckboxes = (arrayOfObj) => {
     let allBoxes = arrayOfObj.map((item) => {
@@ -110,17 +135,14 @@ const getArabicBoxes = (boxesId) => {
 
 
 
-
-
-
-
-
-
-
-
-
 const drawColumnGraph = (chartId, dataz) => {
     const ctx = document.getElementById(chartId).getContext('2d');
+
+    let chartStatus = Chart.getChart(chartId);
+    if (chartStatus != undefined) {
+        chartStatus.destroy();
+    }
+
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -157,8 +179,12 @@ const drawColumnGraph = (chartId, dataz) => {
     });
 }
 
-const drawPieChart = (chartId, labels ,data) => {
+const drawPieChart = (chartId, labels, data) => {
     const ctx = document.getElementById(chartId).getContext('2d');
+    let chartStatus = Chart.getChart(chartId);
+    if (chartStatus != undefined) {
+        chartStatus.destroy();
+    }
     const myChart = new Chart(ctx, {
         type: 'pie',
         data: {

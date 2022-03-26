@@ -2,3 +2,10 @@
     background-image: linear-gradient(rgb(0, 195, 255), rgb(0, 68, 255));
     color: aliceblue;
 }
+
+.card{
+    border-radius: 1px;
+    border-radius: 15px;
+    margin: 1rem;
+    padding: 1rem;
+}

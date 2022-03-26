@@ -92,8 +92,9 @@ function nextPrev(n) {
                 const tabletInputField = document.querySelector('#tabletid');
                 tabletInputField.value = tabletId;
                 Cookies.set('language', 'ar', { path: '/' });
-                document.getElementById("feedbackForm").submit();
-            }, 40000);
+                console.log("You are taking too much time!")
+                submitWithoutPhoneNumber();
+            }, 30000);
         }
         return false;
     }
@@ -159,8 +160,8 @@ function sendDataToServer() {
         objToSend[item.name] = item.value;
     });
 
-    console.log(objToSend);
-
+    let timeNow = new Date();
+    objToSend["timestamp"] = timeNow;
     // send message to service worker via postMessage
     let msg = {
         'form_data': objToSend

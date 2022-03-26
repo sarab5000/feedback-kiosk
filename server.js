@@ -139,10 +139,13 @@ app.post('/', async (req, res) => {
         delete data.phone;
         let tabletId = data.tabletId;
         delete data.tabletId;
+        let timestamp = data.timestamp;
+        delete data.timestamp;
         let items = Object.keys(data);
 
         const entry = {
-            timestamp: new Date(),
+            timestamp,
+            timestamp_short: timestamp.substr(0, 10),
             mood,
             location,
             phone,
