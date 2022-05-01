@@ -13,6 +13,7 @@ if (lang) {
   }
 }
 else {
+  lang = "ar";
 }
 
 
