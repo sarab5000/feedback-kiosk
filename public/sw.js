@@ -12,7 +12,7 @@ var form_data
 
 importScripts('/cache-polyfill.js');
 
-const cacheName = 'jwkiosk';
+const cacheName = 'jwkiosk2';
 
 self.addEventListener('install', function (e) {
     console.log('registering the service worker...');
@@ -66,6 +66,11 @@ self.addEventListener('install', function (e) {
 
 self.addEventListener('activate', function (event) {
     console.log('Service Worker: Activating....');
+
+    const existingCaches = await caches.keys();
+    const invalidCaches = existingCaches.filter(c => c !== cacheName);
+    await Promise.all(invalidCaches.map(ic => caches.delete(ic)));
+
     event.waitUntil(
         caches.keys().then(function (cacheNames) {
             return Promise.all(cacheNames.map(function (key) {
