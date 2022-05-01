@@ -12,7 +12,7 @@ var form_data
 
 importScripts('/cache-polyfill.js');
 
-const cacheName = 'jwkiosk';
+const cacheName = 'jwkiosk2';
 
 self.addEventListener('install', function (e) {
     console.log('registering the service worker...');
@@ -107,7 +107,8 @@ function openDatabase() {
 
     indexedDBOpenRequest.onerror = function (error) {
         // errpr creatimg db
-        console.error('IndexedDB error:', error)
+        console.error('IndexedDB error:', error);
+        alert("IndexedDB error");
     }
 
 
