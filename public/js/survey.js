@@ -6,7 +6,7 @@ setTimeout(function () {
 
 
 //------------ Language stuff ----------------
-const lang = Cookies.get('language');
+let lang = Cookies.get('language');
 document.getElementById("home_page_title").innerHTML = "ما الذي ربما لم يعجك؟";
 
 if (lang) {
@@ -17,6 +17,7 @@ if (lang) {
     }
 }
 else {
+    lang = "ar";
 }
 //---------------------------------------
 
@@ -79,6 +80,7 @@ function nextPrev(n) {
         //...the form gets submitted:
         document.getElementById("feedbackForm").onclick = () => {
             console.log("hey man");
+            console.log("openning modal:", `#exampleModalCenter_${lang}`);
             // Prevent Bootstrap Modal from disappearing when clicking outside or pressing escape:
             $(`#exampleModalCenter_${lang}`).modal({
                 backdrop: 'static',
