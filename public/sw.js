@@ -5,6 +5,15 @@ https://medium.com/@onejohi/offline-web-apps-using-local-storage-and-service-wor
 
 */
 
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+
+let isOnline = false;
+function updateOnlineStatus(event) {
+    isonline = navigator.onLine;
+}
+
+
 //Let check the database:
 var FOLDER_NAME = 'post_requests'
 var IDB_VERSION = 1
@@ -66,10 +75,6 @@ self.addEventListener('install', function (e) {
 
 self.addEventListener('activate', function (event) {
     console.log('Service Worker: Activating....');
-
-    const existingCaches = await caches.keys();
-    const invalidCaches = existingCaches.filter(c => c !== cacheName);
-    await Promise.all(invalidCaches.map(ic => caches.delete(ic)));
 
     event.waitUntil(
         caches.keys().then(function (cacheNames) {
@@ -140,13 +145,12 @@ self.addEventListener('fetch', function (event) {
             // out whether our request is in any of them
             caches.match(event.request)
                 .then(function (response) {
+                    if (isOnline) {
+                        return fetch(event.request);
+                    }
                     if (response) {
-                        // if we are here, that means there's a match
-                        //return the response stored in browser
                         return response;
                     }
-                    // no match in cache, use the network instead
-                    return fetch(event.request);
                 }
                 )
         );
@@ -223,4 +227,4 @@ self.addEventListener('sync', function (event) {
             sendPostToServer()
         )
     }
-})
+});
