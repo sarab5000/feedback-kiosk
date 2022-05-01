@@ -147,7 +147,7 @@ app.post('/', async (req, res) => {
 
         const entry = {
             timestamp,
-            timestamp_short: timestamp.substr(0, 10),
+            //timestamp_short: timestamp.substr(0, 10),
             mood,
             location,
             phone,
