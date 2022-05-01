@@ -5,15 +5,6 @@ https://medium.com/@onejohi/offline-web-apps-using-local-storage-and-service-wor
 
 */
 
-window.addEventListener('online', updateOnlineStatus);
-window.addEventListener('offline', updateOnlineStatus);
-
-let isOnline = false;
-function updateOnlineStatus(event) {
-    isonline = navigator.onLine;
-}
-
-
 //Let check the database:
 var FOLDER_NAME = 'post_requests'
 var IDB_VERSION = 1
@@ -21,7 +12,7 @@ var form_data
 
 importScripts('/cache-polyfill.js');
 
-const cacheName = 'jwkiosk2';
+const cacheName = 'jwkiosk';
 
 self.addEventListener('install', function (e) {
     console.log('registering the service worker...');
@@ -75,7 +66,6 @@ self.addEventListener('install', function (e) {
 
 self.addEventListener('activate', function (event) {
     console.log('Service Worker: Activating....');
-
     event.waitUntil(
         caches.keys().then(function (cacheNames) {
             return Promise.all(cacheNames.map(function (key) {
@@ -145,12 +135,13 @@ self.addEventListener('fetch', function (event) {
             // out whether our request is in any of them
             caches.match(event.request)
                 .then(function (response) {
-                    if (isOnline) {
-                        return fetch(event.request);
-                    }
                     if (response) {
+                        // if we are here, that means there's a match
+                        //return the response stored in browser
                         return response;
                     }
+                    // no match in cache, use the network instead
+                    return fetch(event.request);
                 }
                 )
         );
@@ -227,4 +218,4 @@ self.addEventListener('sync', function (event) {
             sendPostToServer()
         )
     }
-});
+})
