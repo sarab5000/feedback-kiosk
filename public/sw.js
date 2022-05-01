@@ -7,7 +7,7 @@ https://medium.com/@onejohi/offline-web-apps-using-local-storage-and-service-wor
 
 //Let check the database:
 var FOLDER_NAME = 'post_requests'
-var IDB_VERSION = 1
+var IDB_VERSION = 2
 var form_data
 
 importScripts('/cache-polyfill.js');

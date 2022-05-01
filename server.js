@@ -143,6 +143,8 @@ app.post('/', async (req, res) => {
         delete data.timestamp;
         let items = Object.keys(data);
 
+        console.log("typeof timestamp is", typeof timestamp);
+
         const entry = {
             timestamp,
             timestamp_short: timestamp.substr(0, 10),
