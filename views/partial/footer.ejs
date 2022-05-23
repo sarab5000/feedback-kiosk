@@ -1,35 +1,11 @@
 <div class="" style="">
     <img src="/imgs/bottombanner.png" class="img-fluid" style="width:100%;" alt="Responsive image">
     <div style="position: absolute; bottom: 1px; left: 16px; color: white">Made by T.Systems: 059-5907321</div>
-    <div style="position: absolute; bottom: 1px; right: 16px; color: white">VER 2.3</div>
+    <div style="position: absolute; bottom: 1px; right: 16px; color: white">VER 3.0</div>
 </div>
 
 
 <script>
-    if ('serviceWorker' in navigator) {
-        console.log("Found Service worker, let's register after load");
-        window.addEventListener('load', () => {
-            console.log("Load: registering service worker");
-            navigator.serviceWorker
-                .register('/sw.js')
-                .then(function () { console.log("Service Worker Registered"); }, function () { console.log('Service worker registration failed') });
-
-            navigator.serviceWorker.ready.then(function (registration) {
-                console.log('Service Worker Ready')
-                return registration.sync.register('sendFormData')
-            }).then(function () {
-                console.log('sync event registered')
-            }).catch(function () {
-                // system was unable to register for a sync,
-                // this could be an OS-level restriction
-                console.log('sync registration failed')
-            });
-        });
-    }else
-    {
-        console.log("There is not service worker in this browser!");
-    }
-
     const theLang = Cookies.get('language');
     if (theLang == 'en') {
         document.getElementById("english-lang-btn").style.visibility = 'hidden';

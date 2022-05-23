@@ -168,8 +168,6 @@ function sendDataToServer() {
     let msg = {
         'form_data': objToSend
     }
-    navigator.serviceWorker.controller.postMessage(msg)  // <-This line right here sends our data to sw.js
-
     try{
         axios.post('/', objToSend)
         .then(function (response) {
